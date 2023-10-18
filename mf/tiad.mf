@@ -1,0 +1,31 @@
+% The Computer Modern Tengwar family of founts
+
+if ligs>1: font_coding_scheme:="TeX text";
+ spanish_shriek=oct"074";
+else: font_coding_scheme:=if ligs=0: "TeX typewriter text"
+  else: "TeX text without f-ligatures" fi;
+ spanish_shriek=oct"016"; fi
+
+ligs := 0;
+
+mode_setup; font_setup;
+
+input tiadl;
+input tiads;
+input tiadd;
+input tiada;
+input tiadp;
+input tiadladd;
+
+font_slant slant; font_x_height x_height#;
+if monospace: font_normal_space 9u#; % no stretching or shrinking
+ font_quad 18u#;
+ font_extra_space 9u#;
+else: font_normal_space 6u#+2letter_fit#;
+ font_normal_stretch 3u#; font_normal_shrink 2u#;
+ font_quad 18u#+4letter_fit#;
+ font_extra_space 2u#;
+ k#:=-.5u#; kk#:=-1.5u#; kkk#:=-2u#; % three degrees of kerning
+fi
+
+bye.

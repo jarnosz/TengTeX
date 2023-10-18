@@ -1,0 +1,520 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tengdoc.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\language\english
+\documentclass{article}
+\usepackage{tengtex}
+\title{\TengTeX: \TeX\ Spells for Typesetting in Tengwar\\
+User's Manual\\ Version 1.10%
+\thanks{Inspiration has been drawn from the package Arab\TeX\ by Klaus
+  Lagally. I give thanks to Emanuele Vicentini, Gernot Katzer,
+  Dirk Thierbach and Michael Urban for their comments and cooperation.}}
+%
+\author{Ivan A Derzhanski} \date{22 September 2000}
+
+\newif \ifcmteng \cmtengtrue
+%
+% \crteng %%% Uncomment this line to use Computer Roman Tengwar
+% \jcb \cmtengfalse %%% Uncomment this line to use J Bradfield's tengwar
+% \mpu \cmtengfalse %%% Uncomment this line to use M Urban's tengwar
+%
+\newcommand\book[1]{{\sl#1}\/}
+\newcommand\word[1]{{\it#1}\/}
+\newcommand\que[1]{{\tt #1} & \quetta{#1}}
+\newcommand\quet[1]{%
+  \ifcmteng \underline {\quetta{#1}}\else \quetta{#1}\fi}
+\newcommand\queng[1]{{\tt#1} \quet{#1}}
+\newcommand\sintable{%
+\begin{tabular}{*{6}{|cc|}}\hline
+\que b & \que {bh} & \que B &&& {\tt c}, \que k &{\tt ch}, \que {kh} \\
+\que d & \que {dh} & \que D & \que f & \que g & \que {gh} \\
+\que h & \que {hw} &&& \que j & \que l & \que {lh} \\
+\que m & \que {mh} & \que {mm} & \que n & \que {nn} & \que N \\
+\que p & \que {ph} &&&&& \que r & \que {rh} \\
+\que s & \que {ss} & \que {sh} &&& \que t & \que {th} \\
+\que v &&& \que w &&& \que z & \que {zh} \\\hline
+\end{tabular}}
+\newcommand\qsdth[4]{Diphthongs with~{\tt #1} as second element are
+  written as #2 bearing the tehta for the first element (\queng{#3} `#4')}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+This document describes the use of \TengTeX\ ({\tt
+  tengtex.tex} and {\tt tengtex.sty}) for the \TeX\,/\,\LaTeX\,/\,\LaTeXe\ 
+typesetting of text in the languages of Middle-earth in F\"eanorian
+tengwar, using my Computer Modern Tengwar family,
+its variant Computer Roman Tengwar,
+the fount {\tt teng10} by Julian~C Bradfield
+or the revised fount {\tt tengwar} by Michael~P Urban
+(or any combination of these).%
+\footnote{This document uses Computer Modern Tengwar by default.
+To substitute Computer Roman Tengwar, J~Bradfield's or M~Urban's tengwar,
+uncomment line 18, 19 or 20 of the source, then recompile it.}
+%
+\begin{quote}
+  Perhaps it is worth reminding that the name \word{\TeX} is derived
+  from the Greek word \word{tekhn\=e} `art', which (along with the
+  Latin \word{tex\=o} `weave', \word{textum} `web, fabric, texture',
+  \word{textus} `text') goes back to the Proto-Indo-European root
+  *\word{te\'k\b s-} `create, frame, carve', no doubt from a Lemberin
+  cognate of the Proto-Eldarin base {\sc tek-} `write'
+  (\book{The Lost Road}:391),
+  whence also \quenya Quenya \quet{teke} `writes',
+  \sindarin Sindarin \quet{teitho} `write!'.
+\end{quote}
+%
+The input of \TengTeX\ is essentially an {\sc ascii}sation of the
+R\'omen\'orean spelling adopted by J~R~R Tolkien and described in
+Section~{\sc i} of Appendix~E to \book{The~Lord of the Rings}. (One
+difference is that capital letters are used for increasing the total
+number of~letters available for the input, instead of singling out
+sentence-initial words and proper names, a device which is not
+a regular feature of the F\"eanorian script%
+\footnote{Large ornate initials do occur in some documents,
+but are used very inconsistently.};
+%
+another is that no accent marks
+are used, because of the limitations of~{\sc ascii}.)
+Its output strives to~follow the orthographic conventions of the
+Third Age, discussed in Section~{\sc ii} of the same Appendix and
+illustrated in the few surviving samples of text in tengwar%
+\footnote{One of these sources, Aragorn's letter to Master Samwise, is
+  in fact an early Fourth Age document, but it can be taken as
+  representative of Third Age Sindarin writing, since it was during
+  the Third Age that the author received his Elvish education.---Some
+  archaic (pre-Third\_Age) conventions, in particular regarding
+  Quenya, are also supported.}%
+; on those occasions on which the sources disagree, the evidence from
+the corpus takes precedence over the description in the Appendix. In
+its current version \TengTeX\ is intended for processing text in
+Quenya, Sindarin and their close relatives, and it also provides some
+support for Westron and the Black Speech, but not for any other
+languages, although it may work by~accident for some post-Third\_Age
+Mannish tongues (such as Irish in Sindarin mode).
+
+\TengTeX\ is not copyrighted, but its use is protected by an oath, the
+text of~which (in~English and~Quenya) is to be found in the file~{\tt
+  vanda.tex} in this distribution.
+
+\section{Generalia}
+
+To activate \TengTeX, load it by \verb!\input tengtex! into a \TeX\ 
+source file, include the option {\tt tengtex} into the document
+header of a \LaTeX\ document or instruct \LaTeXe\ to
+\verb!\usepackage{tengtex}!.
+
+The~fount used is selected by one of the spells
+\verb!\cmteng! (Computer Modern Tengwar, the default option),
+\verb!\crteng! (Computer Roman Tengwar),
+\verb!\jcb! (J~Bradfield's {\tt teng10})
+and \verb!\mpu! (M~Urban's {\tt tengwar}).
+Tengwar can be magnified by the spell \verb!\tengwarmag!
+(with one argument; the default is 0).
+The chosen magnification is activated when you next select a fount.
+
+Three major modes are available: Quenya, Classical Sindarin and
+Beleriandic Sindarin. The appropriate mode is selected by the spells
+\verb!\quenya!, \verb!\sindarin! and~\verb!\beleriand!
+(there is no default mode).
+There are also certain options within each of the modes,
+described in the dedicated sections.
+
+The typesetting of text in tengwar, particularly of longer passages,
+is done by the environment {\tt elvish}. For the inclusion of short
+quotations in tengwar into text written in other scripts the macro
+\verb!\quetta! is also available.%
+\footnote{All the macro does is send its parameter to the environment
+  for processing; it thus uses more of \TeX's memory, but it is
+  shorter to type.}
+%
+An~Elvish environment, but not an Elvish quotation, may consist of
+two or more paragraphs separated by blank lines.
+
+In an Elvish environment or quotation continuous strings of letters
+(in the \TeX\ sense) are recognised as words and written in tengwar in
+the output, following the orthographic conventions of the mode (and
+ignoring letters to~which a value is not assigned); continuous strings
+of decimal digits are recognised as numbers, and are inverted in the output.%
+\footnote{Numbers are not explicitly marked as such with a dot or line
+  above them, since the numerals in the founts are already sufficiently
+  distinct from tengwar, in any case more so than a dot would be from
+  an overdot tehta.}
+%
+Numbers may form part of words.
+%
+\begin{quote}
+\quenya\queng{\lightvocalise Sauron ataltane 3019sse.}
+
+[Quenya] `Sauron fell in 3019.'
+\end{quote}
+%
+Any other characters (such as punctuation marks), blank space and
+\TeX, \LaTeX\ or~\TengTeX\ parameterless commands are let~through
+unchanged, and it is the user's respons\-ibility to ensure that their
+visible effect, if any, makes sense in the chosen fount (for~example,
+because of the way the character code tables are organised,
+a hyphen yields a tengwa number 11 in J~Bradfield's fount
+and a wavy dash in M~Urban's and in Computer Modern Tengwar).
+Empty pairs of curly brackets can be used to break ligatures,
+as they make \TengTeX\ think that the word ends there
+and a new one begins.
+
+\section{Computer Modern Tengwar}
+
+The Computer Modern Tengwar family (included in this distribution)
+is to Computer Modern Roman as the tengwar themselves are
+to the medi\ae val Anglo-Saxon and Celtic calligraphic
+Roman hands that were their Primary World prototype.
+Just as Computer Modern Roman is \TeX's default fount family,
+the Computer Modern Tengwar are now \TengTeX's native accent.
+
+I made this family with several purposes.
+First, I expect it to help us see the tengwar with the eyes
+of a European of old (such as Ottor W\'\ae fre the mariner,
+named Eriol in Tol Eress\"ea),
+to~whom they would not have appeared archaic, only different
+in the use, but not the style, of eminently familiar graphic
+elements.
+
+Second, chances are that those who wish to use the tengwar for
+large-scale writing will need a wider variety of sizes and styles.
+Within this family counterparts of all Computer Modern
+and Concrete Roman typefaces can be generated and used.
+(Support for their selection has not been included in the
+package at this stage, but it can be added easily enough
+if the idea proves popular. In the meantime users are
+encouraged to experiment.)
+
+Third, it blends better with surrounding text in Roman
+(so well, in fact, that I have found it necessary
+to underline all inclusions in tengwar in this document),
+which may be an advantage in some situations.
+
+And fourth, there now is a fount that I can make
+\TengTeX's default, without having to give priority
+to either J~Bradfield's or M~Urban's.
+
+\section{Computer Roman Tengwar}
+
+The Computer Roman Tengwar family endeavours an even more radical move
+in the same direction as Computer Modern Tengwar:
+on top of the modernisation of the entire character set
+it performs a further degree of romanisation of the primary tengwar
+(the secondary ones are not altered).
+Needless to say, it blends even better with Roman text.
+
+Although it claims to be a separate family, in reality it uses the same
+typefaces as Computer Modern Tengwar, only different parts of them.
+
+\section{Quenya}\quenya
+
+\subsection{Vowels}
+
+In Quenya mode you have the option of choosing between heavy (default)
+and light vocalisation, using the words \verb!\heavyvocalise! and
+\verb!\lightvocalise! for~switching back and~forth.
+
+Short vowels are written as tehtar over the preceding consonant or
+(when syllable-initial) over a short carrier. When light vocalisation
+(a glimpse of which is to be seen in \book{J~R~R Tolkien, Life
+  and~Legend (Catalogue of the Bodleian Library Exhibition, Oxford,
+  1992)}, Plate~218) is selected, the tehta for~{\tt a} is not
+written, but all tengwar standing for syllable-final consonants
+receive a subscript~dot tehta ({\tt falmar} `waves', for~example,
+is set as \quet{\lightvocalise falmar} if vocalised lightly and
+\quet{falmar} if vocalised heavily).
+
+Long vowels can be either doubled in the input, and then the tehta is
+also doubled (\queng{yeen} `year', \queng{mool} `slave, thrall',
+\queng{uur} `fire'; note that this only works with {\tt e}, {\tt o}
+and {\tt u}), or capitalised, and then the single tehta is written
+over a long carrier (\queng{yAr} `blood').
+
+\qsdth i{yanta}{oire} {everlasting age}. \qsdth u{\'ure}{leuke}{snake}.
+
+\subsection{Consonants}
+
+The following consonants and consonant clusters are available:
+
+\medskip
+
+\begin{tabular}{*{5}{|cc|}}\hline
+{\tt c}, \que k & \que f & \que G & \que h & \que {hl} \\
+\que {hr} & \que {ht} & \que {hw} & \que H & \que l \\
+\que {lb} & \que {ld} & \que m & \que {mb} & \que {mp} \\
+\que n & {\tt nc}, \que {nk} & \que {nd} & \que {ng} & \que {ngw} \\
+{\tt nq}, \que {nqu} & \que {nt} &&& \que N & \que {Nw} \\
+\que p & {\tt q}, \que {qu} &&& \que r & \que {rd} \\
+\que s & \que {ss} &&& \que S & \que t \\
+\que v & \que w & \que x & \que y & \que z \\\hline
+\end{tabular}
+\medskip\\\lightvocalise
+%
+Double consonants are written with an under\-bar tehta
+(\queng{quetta}%
+\footnote{The examples in this section are vocalised lightly.}
+%
+`word', \queng{tyelle} `grade'). The only exception is {\tt ss}, which
+is written as esse (\queng{Gassa} `hole, opening, mouth').
+%
+\begin{itemize}
+\item[\vbox{\hbox{{\tt G}, {\tt H}, {\tt S},}\hbox{{\tt N}, {\tt
+        Nw}}}] yield tengwar which had lost their original phonetic
+  values by the Third Age. They are meant for writers concerned with
+  etymology (\queng{Galda} `tree', \queng{HOn} `heart', \queng{Noola}
+  `wise, learned', \queng{Sinde} `grey').%
+  \footnote{The first notation is suggested by the fact that
+    Proto-Eldarin \word{g}, preserved in Sindarin, became zero in
+    Quenya, presumably going through a stage where it was an
+    approximant, such as might have been denoted by anna. The
+    remaining four tengwar are pronounced as the ones input by the
+    corresponding lowercase Roman letters.}
+\item[\tt q]may be used without the following {\tt u},
+so both {\tt quetta} and {\tt qetta} yield \quet{quetta}.
+\item[\tt r]is written as r\'omen when followed by a vowel or by {\tt
+    y} (\queng{rOmen} `east', \queng{hrIve} `winter', \queng{kirya}
+  `ship') and as \'ore elsewhere (\queng{kirkar} `sickles').
+\item[\tt R]is always written as \'ore (\queng{ORe} `heart, inner mind').
+\item[\tt s]is written as an underhook tehta when following another
+  consonant (\queng{otso} `seven', \queng{aksa} `ravine',
+  \queng{norsa} `giant').
+\item[\tt y]is written as an under-di\ae resis tehta when following
+  another consonant (\queng{Nwalya} `torment').
+\end{itemize}
+%
+When silme and~esse bear a tehta for a following vowel, their nuquerna
+shapes are automatically substituted (\queng{silme} `starlight',
+\queng{esse} `name').
+
+\subsection{An illustration}
+
+\subsubsection*{Galadriel's lament in~L\'orien}\heavyvocalise
+
+(From \book{The Road Goes Ever On}.)
+
+\medskip\begin{elvish}
+ai! laurie lantar lassi sUrinen,
+yeeni UnOtime ve rAmar aldaron!.
+yEni ve linte yuldar avAnier
+mI oromardi lisse,miruvOreva,
+andUne pella, vardo tellumar
+nu luini yassen tintilar i eleni
+Omaryo airetAri,lIrinen.
+
+sI man i yulma nin enquantuva?.
+
+an sI tintalle varda oiolosseo
+ve fanyar mAryat elentAri ortane,
+ar ilye tier undulAve lumbule;
+ar sindanOriello caita mornie
+i falmalinnar imbe met, ar hIsie
+untUpa calaciryo mIri oiale.
+sI vanwa nA, rOmello vanwa, valimar!.
+
+namArie! nai hiruvalye valimar.
+nai elye hiruva. namArie!.
+\end{elvish}
+
+\section{Sindarin}\sindarin
+
+\subsection{Vowels}
+
+Short vowels are written as tehtar over the following consonant or
+(when none follows) over a short carrier. By default {\tt o} is
+written as a curl open to the right and~{\tt u} as a curl open to the
+left, but their r\^oles can be swapped by specifying~\verb!\oleft!
+(Black Speech \queng{\oleft\vaswestron uruk} `great soldier-orc,
+Uruk-hai') and restored by specifying~\verb!\oright!.
+
+Long vowels can be either doubled in the input, and then the tehta is
+also doubled (\queng{eel} `star', \queng{too} `thither', \queng{uur}
+`fire'; note that this only works with {\tt e}, {\tt o} and {\tt u}),
+or capitalised, and then the single tehta is written over a long
+carrier (\queng{Ar} `king, chieftain', \queng{gwI} `net, web',
+\queng{rhYn} `hound of chase', Black Speech \queng{shaRkU} `old man').
+No distinction is made between long and overlong vowels.
+
+\qsdth e{yanta}{oer}{sea}. \qsdth i{anna}{uir}{eternity}.
+\qsdth u{\'ure}{naug}{dwarf}.
+
+\subsection{Consonants}
+
+In either of the two Sindarin modes you have the option of choosing
+whether the calmat\'ema or the quesset\'ema is to be used for velar
+consonants (and, in the latter case, whether the calmat\'ema is to be
+used for palatal consonants) and whether the \'oretyelle or the
+n\'umetyelle is to be used for single nasal consonants. The selection
+of the Classical Sindarin mode automatically allocates the velars in
+the quesset\'ema, though \verb!\vaswestron! makes {\tt c} available
+for calma (English \queng{\vaswestron cek} `cheque') and
+\verb!\vincalma! transfers the rest of the velars into the
+calmat\'ema.
+(The shortcut \verb!\blackspeech! is equivalent
+to \verb!\sindarin \oleft \vaswestron!.)
+Also, the the nasal consonants are allocated in the
+n\'umetyelle, though this setting can be altered by specifying
+\verb!\ninOre!, and restored by \verb!\ninnUmen!.
+The following consonants and consonant clusters are
+available in the default setting:
+
+\medskip
+
+\sintable
+\medskip\\
+%
+Double consonants are written with an under\-bar tehta (\queng{tellen}
+`footprint'). The only exceptions are {\tt ss}, which is written as
+esse, and {\tt mm} and {\tt nn}, which are written as malta and
+n\'umen with or without an overbar or overtilde tehta.
+%
+\begin{itemize}
+\item[\tt bh]is provided for the sake of completeness, as an
+  alternative to {\tt v}.
+\item[\tt f]is written as formen in initial and medial position
+  (\queng{farn} `enough', \queng{tofn} `deep') and as ampa in final
+  position (\queng{tif} `flute').
+\item[\vbox{\hbox{{\tt gh}, {\tt j},}\hbox{{\tt sh}, {\tt z}, {\tt
+        zh}}}] are provided in order to make possible the typesetting
+  of text in Westron (\queng{zIr} `wise') or the Black Speech
+  (\queng{ghAsh} `fire').
+\item[\tt H]is always written as hyarmen, without forming a digraph
+  with a preceding consonant letter.
+\item[\tt i]is written as yanta when it appears as a glide in initial
+  position (\queng{iAr} `blood', \queng{iolf} `brand',
+  \queng{iuith} `use', \queng{iUl} or \queng{iuul} `embers').
+\item[\tt m]is written as an overbar or overtilde tehta when preceding
+  a labial consonant (\queng{hamp} `garment', \queng{ammarth} `doom,
+  fate').
+\item[\tt n]is written as an overbar or overtilde tehta when preceding
+  a dental or velar consonant (\queng{rhink} `sudden move',
+  \queng{lhann} `wide').
+\item[\tt ph]is written as formen in initial and final position
+  (\queng{alph} `swan') and as formen with an underbar tehta in medial
+  position (\queng{ephel} `outer fence').
+\item[\tt r]is written as \'ore when it occurs word-finally
+  (\queng{bar} `home') and as r\'omen elsewhere (\queng{rAd} `path,
+  track', \queng{arth} `region, realm'). It is, however, always
+  written as r\'omen if {\tt n} is \'ore.
+\item[\tt R]is written as \'ore if {\tt n} is n\'umen, and as r\'omen
+  otherwise.
+\item[\tt w]is written as a squiggle tehta when following another
+  consonant other than~{\tt h} (\queng{gwelw} `air'). A tengwa can
+  bear no more than one consonant superscript tehta, however, so {\tt
+    w} following a consonant preceded by a homorganic nasal is written
+  separately as a wilya (\queng{angwedh} `chain', \queng{glentweth}
+  `thinness'), unless the etymology suggests a different spelling (as
+  in the case of \verb!thurin{}gwethil! \quet{thurin{}gwethil}
+  `secret shadow woman').
+\end{itemize}
+%
+When silme and esse bear a tehta for a preceding vowel (which is,
+in~fact, always the case with esse), their nuquerna shapes are
+automatically substituted (\queng{kost} `quarrel', \queng{bess}
+`woman').
+
+\subsection{Illustrations}
+
+\subsubsection{The King's letter to Samwise Gamgee}
+
+(From \book{Sauron Defeated}.)
+
+\medskip\begin{elvish}
+  elessar telcontar; aragorn arathornion edhelHarn, aran gondor ar
+  hIr i mbair annui, anglennatha i varanduiniant erin dolothen ethuil,
+  egor ben genediad drannail erin gwirith edwen. ar e anIra ennas
+  suilannad mhellyn In phain; edregol e anIra tIrad i cheRdir
+  peRHael (i sennui pant{}hael estathar aen) condir i drann, ar
+  meril bess dIn, ar elanor, meril, glorfinniel, ar eirien sellath
+  dIn; ar iorHael, gelir, cordof, ar baravorn ionnath dIn.
+
+  a pherHael ar am meril suilad uin aran o minas tirith nelchaenen
+  uin echuir.
+\end{elvish}
+
+\subsubsection{The Ring inscription}\oleft \vaswestron
+
+(From \book{The Lord of the Rings}.)
+
+\medskip
+\quetta{ash nazg duRbatuluuk,} \quetta{ash nazg gimbatul,}
+
+\quetta{ash nazg thrakatuluuk,} \quetta{agh buRzumishi krimpatul}
+
+\section{Beleriandic}\beleriand
+
+\subsection{Vowels}
+
+Short vowels are written as tengwar. Long vowels, written double (if
+they could be doubled in the Classical Sindarin mode) or represented
+as capitals in the input, are written as the corresponding tengwar
+with an~andaith (\queng{eel} `star', \queng{too} `thither',
+\queng{uur} `fire'; \queng{Ar} `king, chieftain', \queng{gwI} `net,
+web', \queng{rhYn} `hound of chase').
+
+Diphthongs with {\tt e} as second element are written in~full
+(\queng{oer} `sea'). Diphthongs with {\tt i} as second element are
+written as the tengwa for the first element bearing a di\ae resis
+tehta (\queng{uir} `eternity').  Diphthongs with {\tt u} as second
+element are written as the tengwa for the first element bearing a
+squiggle tehta (\queng{naug} `dwarf').
+
+\subsection{Consonants}
+
+The selection of the Beleriandic mode automatically allocates the
+velars in the calmat\'ema and the single nasal consonants in the
+\'oretyelle, though this setting can be altered by specifying
+\verb!\vinquesse! or \verb!\vincalma! for the former and/or
+\verb!\ninnUmen! or \verb!\ninnOre! for the latter.
+The following consonants and consonant clusters are available
+in the default setting:
+
+\medskip
+
+\sintable
+\medskip\\
+%
+The glide {\tt i} in initial position is written as a long carrier
+(\queng{iAr} `blood'). The remaining input conventions are the same as
+in the Classical Sindarin mode.%
+\footnote{%
+An error in the definition of the Beleriandic mode
+used to interfere with the proper interpretation of word-internal \word{ph}.
+In Version 1.10 this has been corrected.}
+
+Since there are no vowel tehtar in this mode, silme and esse always
+appear in their upright (not nuquerna) shapes.
+
+\subsection{Illustrations}
+
+\subsubsection{The hymn of the Rivendell elves}
+
+(From \book{The Road Goes Ever On}.)
+
+\medskip\begin{elvish}
+a elbereth! gilthoniel!
+silivren penna mIriel,
+o menel aglar elenath!
+
+na,chaered palan,dIriel
+o galadhremmin ennorath;
+fanuilos, le linnathon,
+nef aear, sI nef aearon!
+\end{elvish}
+
+\subsubsection{The inscription on the Moria Gate}
+
+(From \book{The Lord of the Rings}. Observe the spelling
+\verb!mel{}lon! \quet{mel{}lon} instead of \queng{mellon}.)
+
+\medskip\begin{elvish}
+ennyn durin aran moria; pedo mel{}lon a minno.
+
+im narvi hain echant; celebrimbor o eregion teithant i thIw hin.
+\end{elvish}
+
+\end{document}

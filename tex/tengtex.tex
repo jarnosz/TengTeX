@@ -1,0 +1,46 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tengtex.tex  (TengTeX for Plain TeX)
+% 22 September 1994
+% Version 1.00
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ivan A Derzhanski
+% Centre for Cognitive Science
+% University of Edinburgh
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\def \makeatletter {\catcode `\@ = 11 }
+\def \makeatother  {\catcode `\@ = 12 }
+
+\makeatletter
+
+%%% hacks from latex.tex
+
+\def\:{\let\@sptoken= } \:  % this makes \@sptoken a space token
+\def\:{\@xifnch} \expandafter\def\: {\futurelet\@tempc\@ifnch}
+
+\def\@nnil{\@nil}
+\def\@fornoop#1\@@#2#3{}
+\def\@tfor#1:=#2\do#3{\def\@fortmp{#2}\ifx\@fortmp\@empty \else
+    \@tforloop#2\@nil\@nil\@@#1{#3}\fi}
+\def\@tforloop#1#2\@@#3#4{\def#3{#1}\ifx #3\@nnil
+       \let\@nextwhile\@fornoop \else
+      #4\relax\let\@nextwhile\@tforloop\fi\@nextwhile#2\@@#3{#4}}
+
+%%% hacks from arabtex.tex
+
+\newif \if@ignore % ignore spaces after environment?
+
+\def \begin #1{% small version without checks
+\begingroup
+ \long \def \end ##1{% local version for \end{elvish} and \end \end
+   \ifx ##1\par \endelvish \endgroup
+   \else \csname end\string ##1\endcsname \endgroup \fi
+   \if@ignore \global\@ignorefalse \ignorespaces \fi }%
+\csname #1\endcsname }
+
+\input tengtex.sty
+
+\makeatother
+
+\endinput

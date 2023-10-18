@@ -1,0 +1,1051 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tengtex.sty  (TengTeX for LaTeX)
+% <> <> 2000
+% Version 1.10
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ivan A Derzhanski
+% Department of Mathematical Linguistics
+% Institute for Mathematics and Computer Science
+% Bulgarian Academy of Sciences
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def \TengTeX {T\ama@tehta {\char19}{\~g}\TeX }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% miscellaneous  spells %%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\tengwarmag #1{\def \teng@mag {\magstep {#1}}}
+\def\teng@mag{\magstep 0}
+
+\def\blackspeech {\sindarin \oleft \vaswestron }
+
+
+%%%%%%%%%%%%% character definitions  common to all founts %%%%%%%%%%%%%
+
+\def\l@p#1#2{{\setbox0=\hbox{#2}\ooalign{\box0\crcr\hidewidth#1\hidewidth}}}%
+
+\chardef \tanta@Oman="FA
+
+\chardef \@quessiEva="FB % Quenya:  _q_ expecting _u_
+\chardef \@unquiEva="FC  % Quenya: _nq_ expecting _u_
+
+\chardef \@phormen="FD   % Sindarin: _ph_
+\chardef \mh@sind="FE   % Sindarin: _mh_
+
+\chardef \i@iEva="FF     % Beleriandic Sindarin: sentence-initial _i_
+
+
+%%%%%%%% character definitions common  to both newstyle founts %%%%%%%%
+
+\def \new@style@tengwar {%
+\chardef \a@tehta="5E
+\chardef \e@tehta="13
+\chardef \i@tehta="5F
+\chardef \o@tehta="20
+\chardef \u@tehta="27
+\chardef \E@tehta="7D \let \@E@tehta \relax
+\chardef \O@tehta="22 \let \@O@tehta \relax
+\chardef \U@tehta="24 \let \@U@tehta \relax
+\chardef \s@kUn="05
+%
+\chardef \sinta@kolindo="04
+\chardef \anda@kolindo="11
+%
+\chardef \@lambe="E2   \chardef \@alda="E3
+\chardef \@rOmen="E0   \chardef \@arda="E1
+\chardef \@silme="E8   \chardef \@silme@nuquerna="E9
+\chardef \@esse="EA    \chardef \@esse@nuquerna="EB
+\chardef \@hyarmen="EC \chardef \@hwesta@sindarinwa="ED
+\chardef \@yanta="EE   \chardef \@Ure="EF
+\chardef \@halla="02   \chardef \@mhalta="0F
+%
+\def \uOman@tehta ##1##2{% no following vowel
+  \ifx ##2\@lambe {\l@p {\lower.1ex\hbox{;}}{##1}}%
+  \else {\o@lign{\relax##1\crcr\hidewidth\sh@ft{10};\hidewidth}}\fi}%
+%
+\def \T@nun@tehta ##1{\l@p {\char27}{##1}}% doubling a narrow tengwa
+\def \D@nun@tehta ##1{\l@p {\char25}{##1}}% doubling a wide tengwa
+\def \L@nun@tehta ##1{##1\kern-.45em\raise.45ex\hbox{\char27}}% doubling lambe
+%
+\def \y@nun@tehta ##1{\l@p {\char28}{##1}}% _y_ following something
+\def \l@nun@tehta ##1{##1\raise.35ex\hbox to.5pt{\hss {\char28}}}% _y_ following _l_
+\def \r@nun@tehta ##1{##1\raise.25ex\hbox to.5pt{\hss {\char28}}}% _y_ following _r_
+%
+\def \s@nun@tehta ##1{##1\kern-0.45em\char24}% _s_ following something
+\def \x@nun@tehta ##1{\char26\kern-0.45em##1}% _s_ following _c_
+\def \z@nun@tehta ##1{##1\kern-0.28em\char24}% _s_ following _l_
+%
+\chardef \y@tehta="7F
+%
+\chardef \arka@ama@falma="7E % prenasalisation for a narrow tengwa
+\chardef \landa@ama@falma="7C % prenasalisation for a wide tengwa
+\chardef \w@tehta="5C
+%\def\w@tehta##1{##1\raise .9ex\hbox to 0pt{\hss\symbol{"5C}}}
+%
+\chardef \a@tengwa="10 \chardef \y@tengwa="E9
+%
+\chardef \@andaith="13
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%% Computer Modern tengwar %%%%%%%%%%%%%%%%%%%%%%%
+
+\def \cmteng {\globaldefs=1%
+\font \cm@tengwar=tiadr10 scaled \teng@mag
+\global \let \@tengwanda \cm@tengwar
+\let \@tengwar \cmteng
+%
+\new@style@tengwar
+\chardef \@tinco="A0  \chardef \@SUle="A2   \chardef \@Ore="A4
+\chardef \@ando="A1   \chardef \@anto="A3   \chardef \@nUmen="A5
+\chardef \x@ando="A7
+\chardef \@parma="A8  \chardef \@formen="AA \chardef \@vala="AC
+\chardef \@umbar="A9  \chardef \@ampa="AB   \chardef \@malta="AD
+\chardef \x@umbar="AF
+\chardef \@calma="B0  \chardef \@Harma="B2  \chardef \@Ganna="B4
+\chardef \o@tengwa="B4
+\chardef \@anga="B1   \chardef \@anca="B3   \chardef \@Noldo="B5
+\chardef \@quesse="B8 \chardef \@hwesta="BA \chardef \@wilya="BC
+\chardef \@ungwe="B9  \chardef \@unque="BB  \chardef \@Nwalme="BD
+%
+\globaldefs=0}
+
+\let \@tengwar \cmteng
+
+
+%%%%%%%%%%%%%%%%%%%%%%% Computer Roman tengwar %%%%%%%%%%%%%%%%%%%%%%%%
+
+\def \crteng {\globaldefs=1%
+\font \cm@tengwar=tiadr10 scaled \teng@mag
+\global \let \@tengwanda \cm@tengwar
+\let \@tengwar \crteng
+%
+\new@style@tengwar
+\chardef \@tinco="80  \chardef \@SUle="82   \chardef \@Ore="84
+\chardef \@ando="81   \chardef \@anto="83   \chardef \@nUmen="85
+\chardef \x@ando="87
+\chardef \@parma="88  \chardef \@formen="8A \chardef \@vala="8C
+\chardef \@umbar="89  \chardef \@ampa="8B   \chardef \@malta="8D
+\chardef \x@umbar="8F
+\chardef \@calma="90  \chardef \@Harma="92  \chardef \@Ganna="94
+\chardef \o@tengwa="94
+\chardef \@anga="91   \chardef \@anca="93   \chardef \@Noldo="95
+\chardef \@quesse="98 \chardef \@hwesta="9A \chardef \@wilya="9C
+\chardef \@ungwe="99  \chardef \@unque="9B  \chardef \@Nwalme="9D
+%
+\globaldefs=0}
+
+
+%%%%%%%% character definitions common  to both oldstyle founts %%%%%%%%
+
+\def \old@style@tengwar {%
+\chardef \@tinco=`t  \chardef \@SUle=`T   \chardef \@Ore=`R
+\chardef \@ando=`d   \chardef \@anto=`D   \chardef \@nUmen=`n
+\chardef \@parma=`p  \chardef \@formen=`f \chardef \@vala=`w
+\chardef \@umbar=`b  \chardef \@ampa=`v   \chardef \@malta=`m
+\chardef \@quesse=`k \chardef \@hwesta=`K \chardef \@Noldo=`Y
+\chardef \@ungwe=`g  \chardef \@unque=`G  \chardef \@Nwalme=`N
+\chardef \@lambe=`l  \chardef \@alda=`L   \chardef \@rOmen=`r
+\chardef \@anga=`j   \chardef \@silme=`s  \chardef \@esse=`z
+\chardef \x@ando="04
+}
+
+%%%%%%%%%%%%%%%%%%%%% Julian Bradfield's  tengwar %%%%%%%%%%%%%%%%%%%%%
+
+\def \jcb {\globaldefs=1%
+\font \jcb@tengwar=teng10 scaled \teng@mag
+\let \@tengwanda \jcb@tengwar
+\let \@tengwar \jcb
+\hyphenchar\jcb@tengwar=-1 % hyphenation in tengwar suppressed
+\emergencystretch=2em % but we can do some extra stretching
+%
+\old@style@tengwar
+\chardef \x@umbar="12
+\chardef \a@tehta=`a
+\chardef \e@tehta=`e \let \@E@tehta \tanta@Oman
+\chardef \i@tehta=`i
+\chardef \o@tehta=`o \let \@O@tehta \tanta@Oman
+\chardef \u@tehta=`u \let \@U@tehta \tanta@Oman
+\chardef \s@kUn="05
+%
+\def \E@tehta {e\kern-.15eme}%
+\def \O@tehta {o\kern-.25emo}%
+\def \U@tehta {u\kern-.35emu}%
+%
+\chardef \sinta@kolindo=`@
+\chardef \anda@kolindo=`*
+%
+\chardef \@calma=`c
+\chardef \@Harma=`C  \chardef \@Ganna=`y
+\chardef \@anca=`J   \chardef \@wilya=`W
+%
+\chardef \@arda=`\&  \chardef \@hyarmen=`h
+\chardef \@silme@nuquerna=`S \chardef \@esse@nuquerna=`Z
+\chardef \@yanta=`I  \chardef \@Ure=`U
+\chardef \@hwesta@sindarinwa=`H
+\chardef \@halla=`|
+%
+\chardef \atta@nar="02
+\chardef \s@anca="14
+\chardef \y@tehtat="19
+%
+\def \uOman@tehta ##1##2{% no following vowel
+  \ifx ##2\@lambe {\l@p {\raise.5ex\hbox{\char5}}{##1}}%
+  \else {\l@p\s@kUn{##1}}\fi}%
+%
+\def \T@nun@tehta ##1{{\l@p\atta@nar{##1}}}% doubling a narrow tengwa
+\let \D@nun@tehta \T@nun@tehta % doubling a wide tengwa
+\def \L@nun@tehta ##1{##1\raise.75ex\hbox to 0pt{\hss\atta@nar}}% doubling _l_
+%
+\def \y@nun@tehta ##1{{\l@p\y@tehtat{##1}}}% _y_ following something
+\def \l@nun@tehta ##1{%
+ ##1\raise.75ex\hbox to 0pt{\hss\y@tehtat}}% _y_ following _l_
+\def \r@nun@tehta ##1{%
+ \raise.2ex\hbox to 0pt{\y@tehtat\hss}##1}%  _y_ following _r_
+%
+\def \s@nun@tehta ##1{##1\kern-0.3em\s@anca}% _s_ following something
+\def \x@nun@tehta ##1{##1\kern-0.05em\s@anca}% _s_ following _c_
+\def \z@nun@tehta ##1{##1\kern-0.12em\s@anca}% _s_ following _l_
+%
+\chardef \y@tehta="22
+%
+\chardef \arka@ama@falma="0F % prenasalisation for a narrow tengwa
+\chardef \landa@ama@falma="0F % prenasalisation for a wide tengwa
+\chardef \w@tehta="16
+%
+\chardef \a@tengwa=`A  \chardef \o@tengwa=`y  \chardef \y@tengwa=`S
+%
+\chardef \@andaith=`e
+%
+\globaldefs=0}
+
+
+%%%%%%%%%%%%%%%%%%%%%%% Michael Urban's tengwar %%%%%%%%%%%%%%%%%%%%%%%
+
+\def \mpu {\globaldefs=1%
+\font \mpu@tengwar=tengwar scaled \teng@mag
+\global \let \@tengwanda \mpu@tengwar
+\let \@tengwar \mpu
+\hyphenchar\mpu@tengwar=-1 % hyphenation in tengwar suppressed
+\emergencystretch=2em % but we can do some extra stretching
+%
+\old@style@tengwar
+\chardef \x@umbar="0E
+\chardef \a@tehta="5E
+\chardef \e@tehta="13
+\chardef \i@tehta="5F
+\chardef \o@tehta="14
+\chardef \u@tehta="15
+\chardef \E@tehta="7D \let \@E@tehta \relax
+\chardef \O@tehta="16 \let \@O@tehta \relax
+\chardef \U@tehta="17 \let \@U@tehta \relax
+%
+\chardef \sinta@kolindo=`i
+\chardef \anda@kolindo="10
+%
+\chardef \@calma=`C  \chardef \@Harma=`S  \chardef \@Ganna=`O
+\chardef \@anca=`Z   \chardef \@wilya=`A
+%
+\chardef \@arda="12  \chardef \@hyarmen=`h
+\chardef \@silme@nuquerna="03 \chardef \@esse@nuquerna="1A
+\chardef \@yanta=`e  \chardef \@Ure=`u
+\chardef \@hwesta@sindarinwa="0F
+\chardef \@halla="11
+%
+\def \uOman@tehta ##1##2{\l@p {\char25}{##1}}% no following vowel
+%
+\def \T@nun@tehta ##1{\l@p {\char8}{##1}}% doubling a narrow tengwa
+\def \D@nun@tehta ##1{\l@p {\char9}{##1}}% doubling a wide tengwa
+\def \L@nun@tehta ##1{##1\llap {\char8}}% doubling lambe
+%
+\def \y@nun@tehta ##1{\l@p {\char24}{##1}}% _y_ following something
+\let \l@nun@tehta \y@nun@tehta
+\def \r@nun@tehta ##1{##1\lower.2ex\hbox to1.5pt{\hss {\char24}}}% _y_ following _r_
+%
+\def \s@nun@tehta ##1{##1\kern-0.3em\char28}% _s_ following something
+\def \x@nun@tehta ##1{##1\kern-0.1em\char28}% _s_ following _c_
+\def \z@nun@tehta ##1{##1\kern-0.18em\char28}% _s_ following _l_
+%
+\chardef \y@tehta="7F
+%
+\chardef \arka@ama@falma="0A % prenasalisation for a narrow tengwa
+\chardef \landa@ama@falma="0B % prenasalisation for a wide tengwa
+\chardef \w@tehta="1E
+%\def\w@tehta##1{##1\raise .9ex\hbox to 0pt{\hss\symbol{"2D}}}
+%
+\chardef \a@tengwa=`a  \chardef \o@tengwa=`o  \chardef \y@tengwa=`y
+%
+\chardef \@andaith="13
+%
+\globaldefs=0}
+
+
+%%%%%%%%%%%%%%%% macro definitions common to all modes %%%%%%%%%%%%%%%%
+
+\long \def \kara@Ukerta #1{%
+    \ifcase \nato@nostale \or \quetto@metta \or \m@m \fi
+    \ifx \@sptoken \hilde@kerta \space \fi
+    #1\nato@nostale=0}
+
+\newcount \nato@nostale % class of input token
+                        % 0: waiting, 1: word, 2: number
+
+\long \def \tUva@kerta #1{%
+  \ifx #1\end\relax
+    \ifcase \nato@nostale \or \quetto@metta \or \m@m \fi
+    \let \next \end
+  \else \ifcat z\noexpand#1\relax
+    \ifnum 1=\nato@nostale
+      \ifx \@sptoken \hilde@kerta
+        \quetto@metta \space \vinya@quetta
+      \fi
+    \else
+      \ifnum 2=\nato@nostale \m@m \fi
+      \ifx \@sptoken \hilde@kerta \space \fi
+      \vinya@quetta
+    \fi
+    \expandafter \kara@kerta \m@m >#1%
+    \nato@nostale=1%
+  \else \ifcat .\noexpand#1\relax
+    \chardef \@ch=`#1\relax
+    \ifnum \@ch<48 \kara@Ukerta #1%
+    \else \ifnum \@ch<58
+      \ifnum 2=\nato@nostale
+        \ifx \@sptoken \hilde@kerta
+          \m@m \space \def \m@m {}%
+        \fi
+      \else
+        \ifnum 1=\nato@nostale \quetto@metta \fi
+        \ifx \@sptoken \hilde@kerta \space \fi
+        \def \m@m {}%
+      \fi
+      \edef \m@m {#1\m@m}%
+      \nato@nostale=2%
+    \else \kara@Ukerta #1%
+    \fi\fi
+  \else \kara@Ukerta #1%
+  \fi\fi
+  \def \next {\futurelet \hilde@kerta \tUva@kerta}%
+  \fi
+  \next}
+
+\def \elvish {% Elvish environment
+  \@tengwar
+  \@tengwanda
+  \nato@nostale=0%
+  \tUva@kerta }
+\def \endelvish {}
+
+\def \quetta #1{\begin{elvish}#1 \end{elvish}} % short quotation
+
+\def \ama@tehta@ #1#2{% allocate low superscript tehta
+ {\setbox0=\hbox{#2}\ooalign{\hidewidth#1\hidewidth\crcr\box0}}}
+
+\def \ama@tehta #1#2{% allocate superscript tehta
+ {\leavevmode \vbox \bgroup
+  \baselineskip 0pt\lineskip 0pt%
+  \halign {\hss ##\unskip \hss \cr #1\vadjust {\vskip -1ex}\cr #2\cr }%
+  \egroup }}
+
+\def \Oman@tengwa #1#2{% put vowel tehta over tengwa, inverting silme and esse
+  \ifx #1\@silme \@Oman@tengwa #2\@silme@nuquerna
+  \else \ifx #1\@esse \@Oman@tengwa #2\@esse@nuquerna
+  \else \@Oman@tengwa #2#1%
+  \fi\fi}
+
+\def \@Oman@tengwa #1#2{% put vowel tehta over tengwa
+  \expandafter \ifx \csname @#1@tehta\endcsname \tanta@Oman
+    \expandafter \ama@tehta \csname #1@tehta\endcsname #2%
+  \else \expandafter \ama@tehta@ \csname #1@tehta\endcsname #2\fi}
+%%%  \else \expandafter \accent \csname #1@tehta\endcsname #2\fi}
+
+\def \tehta@tengwa #1#2{% put consonant tehta over tengwa,
+                        % inverting silme and esse
+  \ifx #1\@silme \accent #2\@silme@nuquerna
+  \else \ifx #1\@esse \accent #2\@esse@nuquerna
+  \else \accent #2#1%
+  \fi\fi}
+
+\def \nun@tehta #1#2{% allocate subscript consonant tehta
+  \ifx #2:%
+    %\ifx #1\@quessiEva \@quesse
+    %\else \ifx #1\@unquiEva \@unque
+    %\else #1\fi\fi
+    #1%
+  \else \expandafter \csname #2@nun@tehta\endcsname {#1}%
+  \fi}
+
+
+%%%%%%%%%%%%%%%%%%%% macro definitions  for Quenya %%%%%%%%%%%%%%%%%%%%
+
+\newif \if@light
+\let \heavyvocalise \@lightfalse
+\let \lightvocalise \@lighttrue
+
+\def \quenya {%
+  \let \kara@kerta \q@kerta
+  \def \vinya@quetta {\def \m@m {\sinta@kolindo ::}}%
+  \def \quetto@metta {\expandafter \@@teka \m@m>}}
+
+\def \@@teka #1#2#3#4>{%
+  \ifx #1\sinta@kolindo 
+    \ifx #3:\ifx \relax #4\relax \else \@teka #4<>\fi
+    \else \@teka #4#1#2#3<>\fi 
+  \else \@teka #4#1#2#3<>\fi}
+
+\def \@teka #1#2>{%
+  \ifx #1\@quessiEva \q@teka \@quesse #2>%
+  \else \ifx #1\@unquiEva \q@teka \@unque #2>%
+  \else \q@teka #1#2>%
+  \fi\fi}
+
+\def \q@teka #1#2#3#4#5>{%
+  \ifx #3:%
+    \ifx #1\@halla \@halla
+    \else \ifx #4\anda@kolindo \nun@tehta #1#2%
+    \else \ifx #4\@yanta \nun@tehta #1#2%
+    \else \ifx #4\@Ure \nun@tehta #1#2%
+    \else
+      \def \q@c@n {\ifx #1\@rOmen \@Ore \else #1\fi}%
+      \if@light \expandafter \uOman@tehta {\nun@tehta \q@c@n #2}#1%
+      \else \nun@tehta \q@c@n #2\fi
+    \fi\fi\fi\fi
+  \else \ifx #1\@rOmen
+    \ifx #2s\s@nun@tehta {\q@c@v \@Ore #3}%
+    \else \nun@tehta {\q@c@v \@rOmen #3}#2%
+    \fi
+  \else \nun@tehta {\q@c@v #1#3}#2%
+  \fi\fi
+  \ifx <#4\let \next \relax \else \def \next {\@teka #4#5>}\fi
+  \next}
+
+\def \q@c@v #1#2{% choosing whether to use vowel tehta
+                 % depending on vocalisation
+  \ifx #2a\if@light #1\else \Oman@tengwa #1a\fi
+  \else \Oman@tengwa #1#2%
+  \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Quenya  scanner %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def \q@kerta #1>#2{%
+  \ifcat #2a\csname #2@q\endcsname #1>%
+  \else \ifcat #2.\expandafter \@@teka \m@m>#2\def \m@m {\sinta@kolindo ::}%
+  \fi\fi}
+
+\def \a@q #1#2#3#4>{%
+  \ifx #3:\def \m@m {#1#2a#4}%
+  \else \def \m@m {\sinta@kolindo :a#4#1#2#3}%
+  \fi}
+
+\def \e@q #1>{\q@quanta@Oman #1>eE}
+\def \o@q #1>{\q@quanta@Oman #1>oO}
+
+\def \q@quanta@Oman #1#2#3#4>#5#6{%
+  \ifx #3:\def \m@m {#1#2#5#4}%
+  \else \ifx #3#5\def \m@m  {#1#2#6#4}%
+  \else \def \m@m {\sinta@kolindo :#5#4#1#2#3}%
+  \fi\fi}
+
+\def \i@q #1#2#3#4>{%
+  \ifx #3:\def \m@m {#1#2i#4}%
+  \else
+    \edef \m@m {%
+      \sinta@kolindo ::#4\ifx #1\sinta@kolindo \else #1#2:\fi \@yanta :#3}%
+  \fi}
+
+\def \u@q #1#2#3#4>{%
+  \ifx #3:%
+    \ifx #1\@quessiEva \def \m@m {\@quesse #2#3#4}%
+    \else \ifx #1\@unquiEva \def \m@m {\@unque #2#3#4}%
+    \else \def \m@m {#1#2u#4}%
+    \fi\fi
+  \else \ifx #3u\def \m@m  {#1#2U#4}%
+  \else
+    \edef \m@m
+     {\sinta@kolindo ::#4\ifx #1\sinta@kolindo \else #1::\fi \@Ure :#3}%
+  \fi\fi}
+
+\def \A@q #1>{\q@anda@Oman #1>a}
+\def \E@q #1>{\q@anda@Oman #1>e}
+\def \I@q #1>{\q@anda@Oman #1>i}
+\def \O@q #1>{\q@anda@Oman #1>o}
+\def \U@q #1>{\q@anda@Oman #1>u}
+
+\def \q@anda@Oman #1#2#3#4>#5{%
+  \edef \m@m
+   {\sinta@kolindo ::#4%
+    \ifx #1\sinta@kolindo
+      \ifx #3:\else ::#3\fi
+    \else #1#2#3\fi \anda@kolindo :#5}}
+
+\def \b@q #1#2#3#4>{\edef \m@m {\@umbar ::#4\ifx #1\@lambe \@lambe ::\fi}}
+
+\def \d@q #1#2#3#4>{%
+  \edef \m@m
+   {\ifx #1\@lambe \@alda
+    \else \ifx #1\@rOmen \@arda
+    \else \@ando \fi\fi ::#4}}
+
+\def \g@q #1#2#3#4>{\def \m@m {\@anga ::#4}}
+
+\def \h@q #1#2#3#4>{%
+  \ifx #3:%
+    \ifx #1\sinta@kolindo \def \m@m {\@hyarmen ::#4}%
+    \else \edef \m@m {\@hyarmen ::#4#1::}%
+    \fi
+  \else \def \m@m {\@hyarmen ::#4#1#2#3}%  
+  \fi}
+
+\def \f@q #1>{\q@Upunta #1>\@formen T}
+\def \G@q #1>{\q@Upunta #1>\@Ganna T}
+\def \H@q #1>{\q@Upunta #1>\@Harma T}
+\def \l@q #1>{\q@Upunta #1>\@lambe L}
+\def \m@q #1>{\q@Upunta #1>\@malta D}
+\def \n@q #1>{\q@Upunta #1>\@nUmen D}
+\def \N@q #1>{\q@Upunta #1>\@Noldo D}
+\def \r@q #1>{\q@Upunta #1>\@rOmen T}
+\def \R@q #1>{\q@Upunta #1>\@Ore T}
+\def \S@q #1>{\q@Upunta #1>\@SUle T}
+\def \v@q #1>{\q@Upunta #1>\@vala T}
+\def \z@q #1>{\q@Upunta #1>\@esse T}
+
+\def \q@Upunta #1#2#3#4>#5#6{%
+  \ifx #3:%
+    \ifx #1\sinta@kolindo \def \m@m {#5::#4}%
+    \else \ifx #1#5\def \m@m {#5#6:#4}%
+    \else \edef \m@m {#5::#4\ifx #1\@hyarmen \@halla \else #1\fi ::}%
+    \fi\fi
+  \else \def \m@m {#5::#4#1#2#3}%  
+  \fi}
+
+\def \s@q #1#2#3#4>{%
+  \ifx #3:%
+    \ifx #1\sinta@kolindo \def \m@m {\@silme ::#4}%
+    \else \ifx #1\@silme \def \m@m {\@esse ::#4}%
+    \else
+      \edef \m@m
+       {#1\ifx #1\@calma x\else \ifx #1\@lambe z\else s\fi\fi :#4}%
+    \fi\fi
+  \else \def \m@m {\@silme ::#4#1#2#3}%
+  \fi}
+
+\def \w@q #1#2#3#4>{%
+  \ifx #3:%
+    \ifx #1\sinta@kolindo \def \m@m {\@wilya ::#4}%
+    \else \ifx #1\@anga \def \m@m {\@ungwe ::#4}%
+    \else \ifx #1\@harma \def \m@m {\@hwesta ::#4}%
+    \else \ifx #1\@hyarmen \def \m@m {\@hwesta ::#4}%
+    \else \ifx #1\@Noldo \def \m@m {\@Nwalme ::#4}%
+    \else \def \m@m {\@wilya ::#4#1#2#3}%
+    \fi\fi\fi\fi\fi
+  \else \def \m@m {\@wilya ::#4#1#2#3}%  
+  \fi}
+
+\def \x@q #1#2#3#4>{%
+  \edef \m@m{%
+    \@calma x:#4%
+    \ifx #3:\ifx #1\sinta@kolindo \else #1::\fi\else #1#2#3\fi }}    
+
+\def \y@q #1#2#3#4>{%
+  \ifx #3:%
+    \edef \m@m {%
+      \ifx #1\sinta@kolindo \@Ganna \else #1\fi
+      \ifx #1\@rOmen r\else \ifx #1\@lambe l\else y\fi\fi :#4}%
+  \else \def \m@m {\@Ganna y:#4#1#2#3}%
+  \fi}
+
+\def \c@q #1>{\q@punta #1>\@calma \@nUmen \@anca}
+\let \k@q \c@q
+\def \p@q #1>{\q@punta #1>\@parma \@malta \@ampa}
+\def \q@q #1>{\q@punta #1>\@quessiEva \@nUmen \@unquiEva}
+
+\def \q@punta #1#2#3#4>#5#6#7{%
+  \ifx #3:%
+    \ifx #1\sinta@kolindo \def \m@m {#5::#4}%
+    \else \ifx #1#5\def \m@m {#5T:#4}%
+    \else \ifx #1#6\def \m@m {#7::#4}%
+    \else \def \m@m {#5::#4#1::}%
+    \fi\fi\fi
+  \else \def \m@m {#5::#4#1#2#3}%
+  \fi}
+
+\def \t@q #1#2#3#4>{%
+  \ifx #3:%
+    \ifx #1\sinta@kolindo \def \m@m {\@tinco ::#4}%
+    \else \ifx #1\@hyarmen \def \m@m {\@tinco ::#4\@Harma ::}%
+    \else \ifx #1\@tinco \def \m@m {\@tinco T:#4}%
+    \else \ifx #1\@nUmen \def \m@m {\@anto ::#4}%
+    \else \def \m@m {\@tinco ::#4#1::}%
+    \fi\fi\fi\fi
+  \else \def \m@m {\@tinco ::#4#1#2#3}%
+  \fi}
+
+
+%%%%%%%%%%%%%%%%%%% macro definitions  for Sindarin %%%%%%%%%%%%%%%%%%%
+
+\def \oright {\def \o@sind {o}\def \u@sind {u}\def \O@sind {O}\def \U@sind {U}}
+\def \oleft  {\def \o@sind {u}\def \u@sind {o}\def \O@sind {U}\def \U@sind {O}}
+
+\newif \ifidot
+
+\newif \if@ninOre
+\def \ninnUmen {%
+  \@ninOrefalse
+  \def \n@sind {\@nUmen}\def \m@sind {\@malta}\def \n@gem {N}}
+\def \ninOre {%
+  \@ninOretrue
+  \def \n@sind {\@Ore}\def \m@sind {\@vala}\def \n@gem {:}}
+
+\def \vinquesse{% use only the quessetEma
+  \def \c@sind {\@quesse}\def \k@sind {\@quesse}\def \g@sind {\@ungwe}%
+  \def \ch@sind {\@hwesta}\def \kh@sind {\@hwesta}\def \gh@sind {\@unque}%
+  \def \N@sind {\@Nwalme}}
+\def \vaswestron{% use both the calmatEma and the quessetEma
+  \def \c@sind {\@calma}\def \k@sind {\@quesse}\def \g@sind {\@ungwe}%
+  \def \ch@sind {\@hwesta}\def \kh@sind {\@hwesta}\def \gh@sind {\@unque}%
+  \def \N@sind {\@Nwalme}}
+\def \vincalma{% use only the calmatEma
+  \def \c@sind {\@calma}\def \k@sind {\@calma}\def \g@sind {\@anga}%
+  \def \ch@sind {\@Harma}\def \kh@sind {\@Harma}\def \gh@sind {\@anca}%
+  \def \N@sind {\@Noldo}}
+
+\def \sindarin {%
+  \let \kara@kerta \s@kerta
+  \oright \ninnUmen \vinquesse
+  \def \vinya@quetta {\def \m@m {::\sinta@kolindo :}}%
+  \def \quetto@metta {\expandafter \@@teitho \m@m>}}
+
+\def \@@teitho #1#2#3#4#5>{%
+  \ifx #1:\ifx #3\sinta@kolindo \ifx \relax #5\relax \else \@teithoi #5<>\fi
+  \else \@teithoi #5#1#2#3#4<>\fi \else \@teithoi #5#1#2#3#4<>\fi}
+
+\def \@teithoi #1#2#3#4#5#6>{%
+  \ifx #3\@phormen
+    \ifx #5<\s@v@t@c@t #1#2\@formen #4%
+    \else \ifx #1:\s@v@t@c@t #1#2\@formen #4%
+    \else \s@v@t@c@t #1#2\@formen T%
+    \fi\fi
+  \else \ifx #3\mh@sind
+    \ifx \@tengwanda \cm@tengwar \s@v@t@c@t #1#2\@mhalta #4%
+    \else \s@v@t@c@t #1\landa@ama@falma \@ampa #4%
+    \fi
+  \else \ifx #3\sinta@kolindo
+    \ifx #5<\@Oman@tengwa #1\sinta@kolindo
+    \else \ifx #1i\@yanta
+    \else \@Oman@tengwa #1\sinta@kolindo
+    \fi\fi
+  \else \@teithoo #1#2#3#4#5%
+  \fi\fi\fi
+  \ifx <#5\let \next \relax \else \def \next {\@teithoii #5#6>}\fi
+  \next}
+
+\def \@teithoii #1#2#3#4#5#6>{%
+  \ifx #3\@phormen
+    \ifx #5<\s@v@t@c@t #1#2\@formen #4\else \s@v@t@c@t #1#2\@formen T\fi
+  \else \@teithoo #1#2#3#4#5%
+  \fi
+  \ifx <#5\let \next \relax \else \def \next {\@teithoii #5#6>}\fi
+  \next}
+
+\def \@teithoo #1#2#3#4#5{%
+  \ifx #3\@formen
+    \ifx #5<\s@v@t@c@t #1#2\@ampa #4\else \s@v@t@c@t #1#2\@formen #4\fi
+  \else \ifx #3\@rOmen
+    \if@ninOre
+      \s@v@t@c@t #1#2#3#4%
+    \else
+      \ifx #5<\s@v@t@c@t #1#2\@Ore #4%
+      \else \s@v@t@c@t #1#2\@rOmen #4%
+      \fi
+    \fi
+  \else \s@v@t@c@t #1#2#3#4%
+  \fi\fi}
+
+\def \s@v@t@c@t #1#2#3#4{%
+  \nun@tehta {%
+    \ifx #1:\ifx #2:#3%
+      \else \tehta@tengwa #3#2%
+      \fi 
+    \else\ifx #2:\Oman@tengwa #3#1%
+      \else
+        \expandafter \ama@tehta \csname #1@tehta\endcsname
+         {\tehta@tengwa #3#2}%
+      \fi 
+    \fi}%
+  #4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% Sindarin  scanner %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def \s@kerta #1>#2{%
+  \ifcat #2a\csname #2@s\endcsname #1>%
+  \else \ifcat #2.%
+    \expandafter \@@teitho \m@m>#2\def \m@m {::\sinta@kolindo :}%
+  \fi\fi}
+
+\def \a@s #1>{\s@quanta@Oman #1>a}
+\def \y@s #1>{\s@quanta@Oman #1>y}
+
+\def \s@quanta@Oman #1#2#3#4#5>#6{%
+  \ifx #3\sinta@kolindo
+    \edef \m@m {#6:\sinta@kolindo :#5\ifx #1:\else #1:\sinta@kolindo :\fi}%
+  \else \def \m@m {#6:\sinta@kolindo :#5#1#2#3#4}%
+  \fi}
+
+\def \e@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo
+    \ifx #1a\def \m@m {::\sinta@kolindo :#5a:\@yanta :}%
+    \else \ifx #1\o@sind \def \m@m {::\sinta@kolindo :#5\o@sind :\@yanta :}%
+    \else \ifx #1e\def \m@m {E:\sinta@kolindo :#5}%
+    \else
+      \edef \m@m {e:\sinta@kolindo :#5\ifx #1:\else #1:\sinta@kolindo :\fi}%
+    \fi\fi\fi
+  \else \def \m@m {e:\sinta@kolindo :#5#1#2#3#4}%
+  \fi}
+
+\def \i@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo
+    \ifx #1:\def \m@m {i:\sinta@kolindo :#5}%
+    \else \def \m@m{::\sinta@kolindo :#5#1:\@Ganna :}%
+    \fi
+  \else \def \m@m {i:\sinta@kolindo :#5#1#2#3#4}%
+  \fi}
+
+\def \o@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo
+    \ifx #1:\def \m@m {\o@sind :\sinta@kolindo :#5}%
+    \else \ifx #1\o@sind \edef \m@m {\O@sind:\sinta@kolindo :#5}%
+    \else \def \m@m {\o@sind :\sinta@kolindo :#5#1:\sinta@kolindo :}%
+    \fi\fi
+  \else \def \m@m {\o@sind :\sinta@kolindo :#5#1#2#3#4}%
+  \fi}
+
+\def \u@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo
+    \ifx #1:\def \m@m {\u@sind :\sinta@kolindo :#5}%
+    \else \ifx #1\u@sind \edef \m@m {\U@sind:\sinta@kolindo :#5}%
+    \else \ifx #1i\def \m@m {\u@sind :\sinta@kolindo :#5#1:\sinta@kolindo :}%
+    \else \def \m@m{::\sinta@kolindo :#5#1:\@Ure :}%
+    \fi\fi\fi
+  \else \def \m@m {\u@sind :\sinta@kolindo :#5#1#2#3#4}%
+  \fi}
+
+\def \A@s #1>{\s@anda@Oman #1>a}
+\def \E@s #1>{\s@anda@Oman #1>e}
+\def \I@s #1>{\s@anda@Oman #1>i}
+\def \O@s #1>{\s@anda@Oman #1>\o@sind }
+\def \U@s #1>{\s@anda@Oman #1>\u@sind }
+\def \Y@s #1>{\s@anda@Oman #1>y}
+
+\def \s@anda@Oman #1#2#3#4#5>#6{%
+  \edef \m@m
+   {::\sinta@kolindo :#5%
+    \ifx #1:\ifx #3\sinta@kolindo \else :#2#3:\fi \else #1#2#3#4\fi
+    #6:\anda@kolindo :}}
+
+\def \f@s #1>{\s@surya #1>\@formen T}
+\def \l@s #1>{\s@surya #1>\@lambe L}
+\def \r@s #1>{\s@surya #1>\@rOmen T}
+\def \R@s #1>{\if@ninOre \s@surya #1>\@rOmen T\else \s@surya #1>\@Ore T\fi}
+\def \v@s #1>{\s@surya #1>\@ampa D}
+
+\def \s@surya #1#2#3#4#5>#6#7{%
+  \ifx #3\sinta@kolindo \def \m@m {#1:#6:#5}%
+  \else \ifx #3#6\def \m@m {#1#2#6#7#5}%
+  \else \def \m@m {::#6:#5#1#2#3#4}%
+  \fi\fi}
+
+\def \b@s #1>{\s@punta #1>\@umbar \m@sind \landa@ama@falma D}
+\def \c@s #1>{\s@punta #1>\c@sind \n@sind \arka@ama@falma T}
+\def \d@s #1>{\s@punta #1>\@ando \n@sind \landa@ama@falma D}
+\def \g@s #1>{\s@punta #1>\g@sind \n@sind \landa@ama@falma D}
+\def \j@s #1>{\s@punta #1>\@anca \n@sind \landa@ama@falma D}
+\def \k@s #1>{\s@punta #1>\k@sind \n@sind \arka@ama@falma T}
+\def \p@s #1>{\s@punta #1>\@parma \m@sind \arka@ama@falma T}
+\def \t@s #1>{\s@punta #1>\@tinco \n@sind \arka@ama@falma T}
+\def \B@s #1>{\s@punta #1>\x@umbar \m@sind \landa@ama@falma D}
+\def \D@s #1>{\s@punta #1>\x@ando \n@sind \landa@ama@falma D}
+
+\def \s@punta #1#2#3#4#5>#6#7#8#9{%
+  \ifx #3\sinta@kolindo \def \m@m {#1:#6:#5}%
+  \else \ifx #3#6\def \m@m {#1#2#6#9#5}%
+  \else \ifx #3#7\def \m@m {#1#8#6:#5}%
+  \else \def \m@m {::#6:#5#1#2#3#4}%
+  \fi\fi\fi}
+
+\def \m@s #1>{\s@nengwea #1>\m@sind \@malta }
+\def \n@s #1>{\s@nengwea #1>\n@sind \@nUmen }
+
+\def \s@nengwea #1#2#3#4#5>#6#7{%
+  \ifx #3\sinta@kolindo \def \m@m {#1:#6:#5}%
+  \else \ifx #3#6\edef \m@m {#1\if@ninOre :\else \landa@ama@falma \fi #7:#5}%
+  \else \def \m@m {::#6:#5#1#2#3#4}%
+  \fi\fi}
+
+\def \N@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo \def \m@m {#1:\N@sind :#5}%
+  \else \ifx #3\N@sind \edef \m@m {#1\landa@ama@falma \N@sind :#5}%
+  \else \def \m@m {::\N@sind :#5#1#2#3#4}%
+  \fi\fi}
+
+\def \h@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo \def \m@m {#1:\@hyarmen :#5}%
+  \else \ifx #3\@tinco \def \m@m {#1#2\@SUle :#5}%
+  \else \ifx #3\@ando \def \m@m {#1#2\@anto :#5}%
+  \else \ifx #3\@parma \def \m@m {#1#2\@phormen :#5}%
+  \else \ifx #3\@umbar \def \m@m {#1#2\@ampa :#5}%
+  \else \ifx #3\m@sind \def \m@m {#1#2\mh@sind :#5}%
+  \else \ifx #3\c@sind \def \m@m {#1#2\ch@sind :#5}%
+  \else \ifx #3\g@sind \def \m@m {#1#2\gh@sind :#5}%
+  \else \ifx #3\@lambe \def \m@m {#1#2\@alda :#5}%
+  \else \ifx #3\@rOmen \def \m@m {#1#2\@arda :#5}%
+  \else \ifx #3\@silme \def \m@m {#1#2\@Harma :#5}%
+  \else \ifx #3\@esse \def \m@m {#1#2\@anca :#5}%
+  \else \def \m@m {::\@hyarmen :#5#1#2#3#4}%
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi}
+
+\def \H@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo \def \m@m {#1:\@hyarmen :#5}%
+  \else \def \m@m {::\@hyarmen :#5#1#2#3:}%
+  \fi}
+
+\def \s@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo \def \m@m {#1:\@silme :#5}%
+  \else \ifx #3\@silme \def \m@m {#1#2\@esse :#5}%
+  \else
+    \edef \m@m
+     {#1#2#3\ifx #3\@calma x%
+            \else\ifx #3\@quesse x%
+            \else\ifx #3\@lambe x%
+            \else s%
+            \fi\fi\fi #5}%
+  \fi\fi}
+
+\def \w@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo \def \m@m {#1:\@wilya :#5}%
+  \else \ifx #3\@hyarmen \def \m@m {#1#2\@hwesta@sindarinwa :#5}%
+  \else \ifx #2:\def \m@m {#1\w@tehta #3:#5}%
+  \else \def \m@m {::\@wilya :#5#1#2#3:}%
+  \fi\fi\fi}
+
+\def \z@s #1#2#3#4#5>{%
+  \ifx #3\sinta@kolindo \def \m@m {#1:\@esse :#5}%
+  \else \def \m@m {::\@esse :#5#1#2#3:}%
+  \fi}
+
+
+%%%%%%%%%%%%%%%%%% macro definitions for Beleriandic %%%%%%%%%%%%%%%%%%
+
+\newif \ifsinta@Oman % short vowel just read
+\newif \if@thegra    % first letter of a word
+
+\def \beleriand {%
+  \let \kara@kerta \b@kerta
+  \ninOre \vincalma
+  \def \vinya@quetta {\def \m@m {:::}\sinta@Omanfalse \@thegratrue }%
+  \def \quetto@metta {\expandafter \tEw@mhedui \m@m }}
+
+\def \@garo #1{\def \m@m {#1}}
+
+\def \@teitho #1#2#3>{%
+  \ifx #2:%
+  \else \ifx #2\@phormen
+    \if@thegra \b@t@c@t #1\@formen#3\else \b@t@c@t #1\@formen T\fi
+  \else \ifx #2\mh@sind
+    \ifx \@tengwanda \cm@tengwar \b@t@c@t #1\@mhalta #3%
+    \else \b@t@c@t \landa@ama@falma \@ampa #3%
+    \fi
+  \else \ifx #2\i@iEva
+    \b@t@c@t #1\sinta@kolindo#3%   word-initial vocalic _i_
+  \else \b@t@c@t #1#2#3%
+  \fi\fi\fi\fi \@thegrafalse }
+
+\def \@teithov #1#2#3>{%
+  \ifx #2\i@iEva
+    \ifidot \tehta@tengwa \anda@kolindo \i@tehta \else \anda@kolindo \fi
+  \else \@teitho #1#2#3>\fi }
+
+\def \tEw@mhedui #1#2#3{%
+  \ifx #2\i@iEva \ifidot \tehta@tengwa \sinta@kolindo \i@tehta%
+      \else \sinta@kolindo \fi
+  \else \ifx #2\@formen \b@t@c@t #1\@ampa #3%
+  \else \ifx #2\@phormen \b@t@c@t #1\@formen#3%
+  \else \ifx #2\@rOmen
+    \if@ninOre \b@t@c@t #1\@rOmen #3\else \b@t@c@t #1\@Ore #3\fi
+  \else \ifx #2\mh@sind
+    \ifx \@tengwar \cmteng \b@t@c@t #1\@mhalta #3%
+    \else \b@t@c@t \landa@ama@falma \@ampa #3\fi
+  \else \b@t@c@t #1#2#3%
+  \fi\fi\fi\fi\fi }
+
+\def \b@t@c@t #1#2#3{%
+  \ifx #2\sinta@kolindo
+    \ifx #1:%
+      \ifidot \tehta@tengwa \sinta@kolindo \i@tehta%
+      \else \sinta@kolindo \fi
+    \else \tehta@tengwa #2#1\fi
+  \else \nun@tehta {\ifx #1:#2\else \tehta@tengwa #2#1\fi }#3\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Beleriandic scanner %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def \b@kerta #1>#2{%
+  \ifcat #2a\csname #2@b\endcsname #1>%
+  \else \ifcat #2.\m@m
+  \fi\fi }
+
+\def \a@b #1>{\b@quanta@Oman #1>\a@tengwa }
+\def \y@b #1>{\b@quanta@Oman #1>\y@tengwa }
+
+\def \b@quanta@Oman #1#2#3>#4{%
+  \ifx #2:\else \@teithov #1#2#3>\fi
+  \@garo {:#4:}\sinta@Omantrue }
+
+\def \e@b #1>{\b@tanta@Oman #1>\@yanta }
+\def \o@b #1>{\b@tanta@Oman #1>\o@tengwa }
+
+\def \b@tanta@Oman #1#2#3>#4{%
+  \ifx #2#4\@garo {\@andaith #4:}\sinta@Omanfalse
+  \else
+    \ifx #2:\else \@teithov #1#2#3>\fi
+    \@garo {:#4:}\sinta@Omantrue
+  \fi}
+
+\def \i@b #1>{%
+  \if@thegra \b@per@Oman #1>\i@iEva \y@tehta
+  \else \b@per@Oman #1>\sinta@kolindo \y@tehta
+  \fi }
+\def \u@b #1#2#3>{%
+  \ifx #2\@Ure \@garo {\@andaith \@Ure :}\sinta@Omanfalse
+  \else \b@per@Oman #1#2#3>\@Ure \w@tehta
+  \fi }
+
+\def \b@per@Oman #1#2#3>#4#5{%
+  \ifsinta@Oman \@garo {#5#2:}\sinta@Omanfalse
+  \else
+    \ifx #2:\else \@teithov #1#2#3>\fi
+    \@garo {:#4:}\sinta@Omantrue
+  \fi}
+
+\def \b@per@Oman #1#2#3>#4#5{%
+  \ifx #2#4\@garo {\@andaith #4:}\sinta@Omanfalse
+  \else \ifsinta@Oman \@garo {#5#2:}\sinta@Omanfalse
+  \else
+    \ifx #2:\else \@teithov #1#2#3>\fi
+    \@garo {:#4:}\sinta@Omantrue
+  \fi\fi}
+
+\def \A@b #1>{\b@anda@Oman #1>\a@tengwa }
+\def \E@b #1>{\b@anda@Oman #1>\@yanta}
+\def \I@b #1>{\b@anda@Oman #1>\sinta@kolindo }
+\def \O@b #1>{\b@anda@Oman #1>\o@tengwa }
+\def \U@b #1>{\b@anda@Oman #1>\@Ure }
+\def \Y@b #1>{\b@anda@Oman #1>\y@tengwa }
+
+\def \b@anda@Oman #1#2#3>#4{%
+  \ifx #2:\else \@teithov #1#2#3>\fi
+  \@garo {\@andaith #4:}\sinta@Omanfalse }
+
+\def \f@b #1>{\b@surya #1>\@formen D}
+\def \l@b #1>{\b@surya #1>\@lambe L}
+\def \r@b #1>{\b@surya #1>\@rOmen T}
+\def \R@b #1>{\if@ninOre \b@surya #1>\@rOmen T\else \b@surya #1>\@Ore T\fi}
+\def \v@b #1>{\b@surya #1>\@ampa D}
+
+\def \b@surya #1#2#3>#4#5{%
+  \ifx #2#4\@garo {#1#2#5}%
+  \else
+    \ifx #2:\else \@teitho #1#2#3>\fi
+    \@garo {:#4:}%
+  \fi \sinta@Omanfalse }
+
+\def \s@b #1#2#3>{%
+  \ifx #2\@silme \@garo {:\@esse :}%
+  \else
+    \ifx #2:\else \@teitho #1#2#3>\fi
+    \@garo {:\@silme :}%
+  \fi \sinta@Omanfalse }
+
+\def \c@b #1>{\b@punta #1>\c@sind \n@sind \arka@ama@falma T}
+\def \b@b #1>{\b@punta #1>\@umbar \m@sind \landa@ama@falma D}
+\def \d@b #1>{\b@punta #1>\@ando \n@sind \landa@ama@falma D}
+\def \g@b #1>{\b@punta #1>\g@sind \n@sind \landa@ama@falma D}
+\def \j@b #1>{\b@punta #1>\@anca \n@sind \landa@ama@falma D}
+\def \k@b #1>{\b@punta #1>\k@sind \n@sind \arka@ama@falma T}
+\def \p@b #1>{\b@punta #1>\@parma \m@sind \arka@ama@falma T}
+\def \t@b #1>{\b@punta #1>\@tinco \n@sind \arka@ama@falma T}
+\def \B@b #1>{\b@punta #1>\x@umbar \m@sind \landa@ama@falma D}
+\def \D@b #1>{\b@punta #1>\x@ando \n@sind \landa@ama@falma D}
+
+\def \b@punta #1#2#3>#4#5#6#7{%
+  \ifx #2#4\@garo {#1#2#7}%
+  \else \ifx #2#5\@garo {#6#4:}%
+  \else
+    \ifx #2:\else \@teitho #1#2#3>\fi
+    \@garo {:#4:}%
+  \fi\fi \sinta@Omanfalse }
+
+\def \m@b #1>{\b@nengwea #1>\m@sind \@malta \landa@ama@falma }
+\def \n@b #1>{\b@nengwea #1>\n@sind \@nUmen \arka@ama@falma }
+
+\def \b@nengwea #1#2#3>#4#5#6{%
+  \ifx #2#4%
+    \if@ninOre \@garo {:#5:}\else \@garo {#6#2:}\fi
+  \else
+    \ifx #2:\else \@teitho #1#2#3>\fi
+    \@garo {:#4:}%
+  \fi \sinta@Omanfalse }
+
+\def \N@b #1#2#3>{%
+  \ifx #2\N@sind
+    \@garo {\landa@ama@falma \N@sind :}%
+  \else
+    \ifx #2:\else \@teitho #1#2#3>\fi
+    \@garo {:\N@sind :}%
+  \fi \sinta@Omanfalse }
+
+\def \mh@b {\landa@ama@falma \@ampa :}
+
+\def \h@b #1#2#3>{%
+  \ifx #2\@tinco \@garo {#1\@SUle :}%
+  \else \ifx #2\@ando \@garo {#1\@anto :}%
+  \else \ifx #2\@parma \@garo {#1\@phormen :}%
+  \else \ifx #2\@umbar \@garo {#1\@ampa :}%
+  \else \ifx #2\m@sind \@garo {#1\mh@sind :}%
+  \else \ifx #2\c@sind \@garo {#1\ch@sind :}%
+  \else \ifx #2\g@sind \@garo {#1\gh@sind :}%
+  \else \ifx #2\@lambe \@garo {#1\@alda :}%
+  \else \ifx #2\@rOmen \@garo {#1\@arda :}%
+  \else \ifx #2\@silme \@garo {#1\@Harma :}%
+  \else \ifx #2\@esse \@garo {#1\@anca :}%
+  \else
+    \ifx #2:\else \@teitho #1#2#3>\fi
+    \@garo {:\@hyarmen :}%
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi \sinta@Omanfalse }
+
+\def \H@b #1#2#3>{%
+  \ifx #2:\else \@teitho #1#2#3>\fi
+  \@garo {:\@hyarmen :}%
+  \sinta@Omanfalse }
+
+\def \w@b #1#2#3>{%
+  \ifx #2\@hyarmen \@garo {:\@hwesta@sindarinwa :}%
+  \else
+    \ifx #2:\@garo {:\@wilya :}%
+    \else \ifx #1:\@garo {\w@tehta #2:}%
+    \else \@teitho #1#2#3>\@garo {:\@wilya :}%
+    \fi\fi
+  \fi \sinta@Omanfalse }
+
+\def \z@b #1#2#3>{%
+  \ifx #2:\else \@teitho #1#2#3>\fi
+  \@garo {:\@esse :}%
+  \sinta@Omanfalse }
+
+
+%%%%%%%%%%%%%%%%%%%%%% ignore  all other letters %%%%%%%%%%%%%%%%%%%%%%
+
+\@tfor\ch@r:=CFJKLMPQTVWXYZj\do{%
+  \expandafter \def \csname \ch@r @q\endcsname #1#2#3#4>{}}
+
+\@tfor\ch@r:=CFGJKLMPQSTVWXZqx\do{%
+  \expandafter \def \csname \ch@r @s\endcsname #1#2#3#4>{}%
+  \expandafter \def \csname \ch@r @b\endcsname #1#2#3#4>{}}

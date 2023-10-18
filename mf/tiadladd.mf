@@ -1,0 +1,373 @@
+def mk_bp(expr code, tall, deep) =
+beginchar(code,10u#+serif_fit#,
+  if tall: asc_height# else: x_height# fi,
+  if deep: desc_depth# else: 0 fi);
+italcorr .5x_height#*slant+
+  if tall: min(.5curve#-u#,-.25u#)
+  else: min(.5curve#-.85u#,-.1u#) fi;
+adjust_fit(serif_fit#,0);
+pickup tiny.nib; pos1(stem',0); pos2(stem,0);
+pos0'(stem',0); pos0(stem,0); z0l=z0'l; x0'=x1; x0=x2;
+lft x1l=hround(2.5u-.5stem');
+top y1=h if not tall: if serifs: +min(oo,serif_drop) fi fi;
+numeric edge; edge=rt x2r;
+pickup fine.nib; pos3(if hefty:thin_join else: hair fi,180);
+pos4(if tall: vair else: vair' fi,90);
+pos5(curve,0); pos6(vair,-90); penpos7(x3l-x3r,-180);
+rt x3l=max(rt x3l-(lft x3r-tiny.lft x2l),1/3[rt x2,edge]);
+y3=1/8[bar_height,x_height];
+x4l=w-.5(w-serif_fit)+.5u; top y4r=x_height+oo;
+rt x5r=hround min(w-1.35u+.5curve,w-.6u); y5=.5x_height;
+x6l=x4l-.2u; bot y6r=-oo;
+x7=x3; y7=min(y3,y6+y4-y3+.6vair);
+(x,y4r)=whatever[z3l,z4l]; x4r:=min(x,.5[x4,x5r]);
+(x',y6r)=whatever[z7l,z6l]; x6r:=min(x',.5[x6,x5r]);
+filldraw stroke z3e{up}...pulled_arc.e(4,5)&pulled_arc.e(5,6)...{up}z7e; % bowl
+y0=ypart(((edge,h)--(edge,0))intersectionpoint(z3l{up}...{right}z4l));
+if deep: bot y2=-d;
+else:
+ y2=ypart(((edge,h)--(edge,0))intersectionpoint(z6l{left}...{up}z7l)) fi;
+pickup tiny.nib; filldraw stroke z1e--z0'e--z0e--z2e;  % stem
+pickup crisp.nib; pos8(hair,0); pos7'(stem,0);
+z7'=z2; x8l=x7'l; bot y8=0;
+filldraw stroke z7'e--z8e;  % point
+if serifs: sloped_serif.l(1,0',a,1/3,jut,serif_drop); % upper serif
+ if deep: dish_serif(2,0,b,1/3,jut,c,1/3,jut); fi fi
+penlabels(0,1,2,3,4,5,6,7,8); endchar;
+enddef;
+
+mk_bp (oct"210", false, true); % parma
+mk_bp (oct"212", true, false); % formen
+mk_bp (oct"214", false, false); % vala
+mk_bp (oct"216", true, true);
+
+def mk_m_bp(expr code, tall, deep)=
+beginchar(code,15u#+serif_fit#,
+  if tall: asc_height# else: x_height# fi,
+  if deep: desc_depth# else: 0 fi);
+italcorr .5x_height#*slant+
+  if tall: min(.5curve#-u#,-.25u#)
+  else: min(.5curve#-.85u#,-.1u#) fi;
+adjust_fit(serif_fit#,0);
+pickup tiny.nib; pos1(stem',0); pos2(stem,0);
+pos0'(stem',0); pos0(stem,0); z0l=z0'l; x0'=x1; x0=x2;
+lft x1l=hround(2.5u-.5stem');
+top y1=h if not tall: if serifs: +min(oo,serif_drop) fi fi;
+numeric edge; edge=rt x2r;
+pickup fine.nib; pos3(if hefty:thin_join else: hair fi,180);
+pos4(if tall: vair else: vair' fi,90);
+pos5(curve,0); pos6(vair,-90); penpos7(x3l-x3r,-180);
+penpos13(x3l-x3r,180); pos14(if tall: vair else: vair' fi,90);
+pos15(curve,0); pos16(vair,-90); penpos17(x3l-x3r,-180);
+z13-z3=z14-z4=z15-z5=z16-z6=z17-z7=(5u,0);
+rt x3l=max(rt x3l-(lft x3r-tiny.lft x2l),1/3[rt x2,edge]);
+y3=1/8[bar_height,x_height];
+x4l=w-.5(w-serif_fit)-2u; top y4r=x_height+oo;
+rt x15r=hround min(w-1.35u+.5curve,w-.6u); y5=.5x_height;
+x6l=x4l-.2u; bot y6r=-oo;
+x7=x3; y7=min(y3,y6+y4-y3+.6vair);
+(x,y4r)=whatever[z3l,z4l]; x4r:=min(x,.5[x4,x5r]);
+(x',y6r)=whatever[z7l,z6l]; x6r:=min(x',.5[x6,x5r]);
+forsuffixes e=l,r:
+ path p.e,pp.e,ppp.e;
+ p.e=z3e{up}...pulled_arc.e(4,5)&pulled_arc.e(5,6)...{up}z7e; % left bowl
+ pp.e=z13e{up}...pulled_arc.e(14,15); % upper right bowl
+ ppp.e=pulled_arc.e(15,16)...{up}z17e; endfor % lower right bowl
+numeric t[];
+(whatever,t1)=p.r intersectiontimes pp.l;
+(whatever,t2)=p.r intersectiontimes pp.r;
+(whatever,t3)=p.r intersectiontimes ppp.l;
+(whatever,t4)=p.r intersectiontimes ppp.r;
+filldraw stroke p.e;
+filldraw subpath (t1,3) of pp.l & subpath (0,t3) of ppp.l
+ -- subpath (t4,0) of ppp.r & subpath (3,t2) of pp.r -- cycle;
+y0=ypart(((edge,h)--(edge,0))intersectionpoint(z3l{up}...{right}z4l));
+if deep: bot y2=-d;
+else:
+ y2=ypart(((edge,h)--(edge,0))intersectionpoint(z6l{left}...{up}z7l)) fi;
+pickup tiny.nib; filldraw stroke z1e--z0'e--z0e--z2e;  % stem
+pickup crisp.nib; pos8(hair,0); pos7'(stem,0);
+z7'=z2; x8l=x7'l; bot y8=0;
+filldraw stroke z7'e--z8e;  % point
+if serifs: sloped_serif.l(1,0',a,1/3,jut,serif_drop); % upper serif
+ if deep: dish_serif(2,0,b,1/3,jut,c,1/3,jut); fi fi
+penlabels(0,1,2,3,4,5,6,7,8,13,14,15,16,17); endchar;
+enddef;
+
+mk_m_bp (oct"211", false, true);
+mk_m_bp (oct"213", true, false);
+mk_m_bp (oct"215", false, false);
+mk_m_bp (oct"217", true, true);
+
+def mk_dq(expr code, tall, deep) =
+beginchar (code,10u#+serif_fit#,
+  if tall: asc_height# else: x_height# fi,
+  if deep: desc_depth# else: 0 fi);
+italcorr if tall: asc_height# else: x_height# fi
+  *slant-serif_fit#+.5stem#-2u# if deep and serifs:+.5u# fi;
+adjust_fit(0,serif_fit# if deep and serifs:-.5u# fi);
+pickup tiny.nib; pos11(stem',0); pos12(stem,0);
+pos10'(stem',0); pos10(stem,0); z10r=z10'r; x10'=x11; x10=x12;
+rt x11r=hround(w-2.5u+.5stem');
+numeric edge; edge=lft x12l;
+pickup fine.nib; pos3(if hefty:thin_join else: hair fi,0);
+pos4(if tall: vair else: vair' fi,90);
+pos5(curve,180); pos6(vair,270); penpos7(x3r-x3l,360);
+lft x3l=min(lft x3l-(rt x3r-tiny.rt x12r),
+  if tall: 1/3 else: 2/3 fi [lft x12,edge]);
+y3=if tall: 1/8[bar_height,x_height] else: bar_height fi;
+x4l=.5(w-serif_fit)-.3u; top y4r=x_height+oo;
+lft x5r=hround max(1.35u-.5curve,.6u); y5=.5x_height;
+x6l=x4l-.2u; bot y6r=-oo; y7=min(y3,y6+y4-y3+.6vair);
+lft x7l=min(lft x7l-(rt x7r-tiny.rt x12r),1/3[lft x12,edge]);
+(x,y4r)=whatever[z3l,z4l]; x4r:=max(x,.5[x5r,x4]);
+(x',y6r)=whatever[z7l,z6l]; x6r:=max(x',.5[x5r,x6]);
+filldraw stroke z3e{up}...pulled_arc.e(4,5)
+ & pulled_arc.e(5,6)...{up}z7e; % bowl
+if tall: top y11=h;
+ y10=ypart(((edge,h)--(edge,0))intersectionpoint(z3l{up}...{left}z4l));
+else:
+ y11=ypart(((edge,h)--(edge,0))intersectionpoint(z3l{up}...{left}z4l));
+ y10=ypart(((edge,h)--(edge,0))intersectionpoint(z6l{right}...{up}z7l));
+fi
+pickup tiny.nib;
+bot y12 = if deep: -d
+  else: if serifs:-min(oo,serif_drop) else: 0 fi fi;
+filldraw stroke z11e--z10'e--z10e--z12e;  % stem
+if tall:
+  if serifs: sloped_serif.l(11,10',a,1/3,jut,serif_drop); fi % upper serif
+else:
+  pickup crisp.nib;
+  pos8(hround(hair-stem_corr),0); pos7'(stem',0);
+  z7'=z11; x8r=x7'r; top y8=h+oo;
+  filldraw stroke z7'e--z8e; fi % point
+if serifs:
+  if deep: dish_serif(12,10,b,1/3,jut,c,1/3,jut);
+  else: sloped_serif.r(12,10,b,1/3,jut,min(oo,serif_drop)); fi fi % lower serif
+penlabels(3,4,5,6,7,8,10,11,12); endchar;
+enddef;
+
+mk_dq (oct"230", false, true); % quesse
+mk_dq (oct"232", true, false); % hwesta
+mk_dq (oct"234", false, false); % wilya
+mk_dq (oct"236", true, true);
+
+def mk_w_dq(expr code, tall, deep) =
+beginchar (code,15u#+serif_fit#,
+  if tall: asc_height# else: x_height# fi,
+  if deep: desc_depth# else: 0 fi);
+italcorr if tall: asc_height# else: x_height# fi
+  *slant-serif_fit#+.5stem#-2u# if deep and serifs:+.5u# fi;
+adjust_fit(0,serif_fit# if deep and serifs:-.5u# fi);
+pickup tiny.nib; pos11(stem',0); pos12(stem,0);
+pos10'(stem',0); pos10(stem,0); z10r=z10'r; x10'=x11; x10=x12;
+rt x11r=hround(w-2.5u+.5stem');
+numeric edge; edge=lft x12l;
+pickup fine.nib; pos3(if hefty:thin_join else: hair fi,0);
+pos4(if tall: vair else: vair' fi,90);
+pos5(curve,180); pos6(vair,270); penpos7(x3r-x3l,360);
+penpos13(x3r-x3l,0); pos14(if tall: vair else: vair' fi,90);
+pos15(curve,180); pos16(vair,270); penpos17(x3r-x3l,360);
+z3-z13=z4-z14=z5-z15=z6-z16=z7-z17=(5u,0);
+lft x3l=min(lft x3l-(rt x3r-tiny.rt x12r),
+  if tall: 1/3 else: 2/3 fi [lft x12,edge]);
+y3=if tall: 1/8[bar_height,x_height] else: bar_height fi;
+x4l=.5(w-serif_fit)+2.2u; top y4r=x_height+oo;
+lft x15r=hround max(1.35u-.5curve,.6u); y5=.5x_height;
+x6l=x4l-.2u; bot y6r=-oo; y7=min(y3,y6+y4-y3+.6vair);
+lft x7l=min(lft x7l-(rt x7r-tiny.rt x12r),1/3[lft x12,edge]);
+(x,y4r)=whatever[z3l,z4l]; x4r:=max(x,.5[x5r,x4]);
+(x',y6r)=whatever[z7l,z6l]; x6r:=max(x',.5[x5r,x6]);
+forsuffixes e=l,r:
+ path p.e,pp.e,ppp.e;
+ p.e=z3e{up}...pulled_arc.e(4,5) & pulled_arc.e(5,6)...{up}z7e; % right bowl
+ pp.e=z13e{up}...pulled_arc.e(14,15); % upper left bowl
+ ppp.e=pulled_arc.e(15,16)...{up}z17e; endfor % lower left bowl
+numeric t[];
+(whatever,t1)=p.r intersectiontimes pp.l;
+(whatever,t2)=p.r intersectiontimes pp.r;
+(whatever,t3)=p.r intersectiontimes ppp.l;
+(whatever,t4)=p.r intersectiontimes ppp.r;
+filldraw stroke p.e;
+filldraw subpath (t1,3) of pp.l & subpath (0,t3) of ppp.l
+ -- subpath (t4,0) of ppp.r & subpath (3,t2) of pp.r -- cycle;
+
+if tall: top y11=h;
+ y10=ypart(((edge,h)--(edge,0))intersectionpoint(z3l{up}...{left}z4l));
+else:
+ y11=ypart(((edge,h)--(edge,0))intersectionpoint(z3l{up}...{left}z4l));
+ y10=ypart(((edge,h)--(edge,0))intersectionpoint(z6l{right}...{up}z7l));
+fi
+pickup tiny.nib;
+bot y12 = if deep: -d
+  else: if serifs:-min(oo,serif_drop) else: 0 fi fi;
+filldraw stroke z11e--z10'e--z10e--z12e;  % stem
+if tall:
+  if serifs: sloped_serif.l(11,10',a,1/3,jut,serif_drop); fi % upper serif
+else:
+  pickup crisp.nib;
+  pos8(hround(hair-stem_corr),0); pos7'(stem',0);
+  z7'=z11; x8r=x7'r; top y8=h+oo;
+  filldraw stroke z7'e--z8e; fi % point
+if serifs:
+  if deep: dish_serif(12,10,b,1/3,jut,c,1/3,jut);
+  else: sloped_serif.r(12,10,b,1/3,jut,min(oo,serif_drop)); fi fi % lower serif
+penlabels(3,4,5,6,7,8,10,11,12,13,14,15,16,17); endchar;
+enddef;
+
+mk_w_dq (oct"231", false, true);
+mk_w_dq (oct"233", true, false);
+mk_w_dq (oct"235", false, false);
+mk_w_dq (oct"237", true, true);
+
+def mk_hn(expr code, tall, deep)=
+beginchar(code,10u#,
+  if tall: asc_height# else: x_height# fi,
+  if deep: desc_depth# else: 0 fi);
+italcorr .5[bar_height#,x_height#]*slant-serif_fit#+.5stem#-2u#;
+adjust_fit(serif_fit#+stem_shift#,serif_fit#-stem_shift#);
+pickup tiny.nib; pos1(stem,0); pos2(stem,0);
+if tall: pos1'(stem',0); pos2'(stem',0);
+else:
+ numeric shaved_stem; shaved_stem=hround(stem-2stem_corr);
+ pos1'(shaved_stem,0); pos2'(shaved_stem,0); fi
+pos3(stem,0);
+lft x1l=hround(2.5u-.5stem); x1l=x1'l=x2l=x2'l; x3=w-x1;
+top y1=h if not tall: +min(oo,serif_drop) fi;
+bot y2=-d; y1=y1'; y2=y2';
+filldraw stroke z1'e--z2'e;  % left stem
+h_stroke(2,a,3,4);  % arch and right stem
+if serifs: sloped_serif.l(1',2',b,1/3,jut,serif_drop); % upper left serif
+ numeric inner_jut; pickup tiny.nib;
+ if rt x2r+jut+.5u+1<=lft x4l-jut: inner_jut=jut;
+ else: rt x2r+jut+.5u+1=lft x4l-inner_jut; fi
+ dish_serif(2,1,c,1/3,jut,d,1/3,jut); % lower left serif
+ dish_serif(4,3,e,1/3,inner_jut,f,1/3,jut); fi % lower right serif
+penlabels(1,2,3,4); endchar;
+enddef;
+
+mk_hn (oct"200", false, true);
+mk_hn (oct"202", true, false);
+mk_hn (oct"204", false, false);
+mk_hn (oct"206", true, true);
+
+def mk_mm(expr code, tall, deep)=
+beginchar(code,15u#,
+  if tall: asc_height# else: x_height# fi,
+  if deep: desc_depth# else: 0 fi);
+italcorr .5[bar_height#,x_height#]*slant-serif_fit#+.5stem#-2u#;
+adjust_fit(serif_fit#+stem_shift#,serif_fit#-stem_shift#);
+numeric shaved_stem; shaved_stem=hround(mfudged.stem-2stem_corr);
+pickup tiny.nib; pos1(mfudged.stem,0); pos2(mfudged.stem,0);
+pos1'(shaved_stem,0); pos2'(shaved_stem,0);
+pos3(mfudged.stem,0); pos5(mfudged.stem,0);
+lft x1l=hround(2.5u-.5stem); x1l=x1'l=x2l=x2'l; % stem, sic
+lft x3l=hround(.5w-.5mfudged.stem); x5-x3=x3-x1;
+if not monospace: r:=hround(x5+x1)+r-w; fi  % change width for better fit
+top y1=h if not tall:+min(oo,serif_drop) fi;
+bot y2=-d; y1=y1'; y2=y2';
+filldraw stroke z1'e--z2'e;  % left stem
+h_stroke(2,a,3,4);  % left arch and middle stem
+h_stroke(4,b,5,6);  % right arch and right stem
+if serifs: sloped_serif.l(1',2',c,1/3,jut,serif_drop); % upper left serif
+ numeric inner_jut; pickup tiny.nib;
+ if rt x2r+jut+.5u+1<=lft x4l-jut: inner_jut=jut;
+ else: rt x2r+jut+.5u+1=lft x4l-inner_jut; fi
+ dish_serif(2,1,d,1/3,jut,e,1/3,jut); % lower left serif
+ dish_serif(4,3,f,1/3,inner_jut,g,1/3,jut); % lower middle serif
+ dish_serif(6,5,h,1/3,inner_jut,i,1/3,jut); fi % lower right serif
+penlabels(1,2,3,4,5,6); endchar;
+enddef;
+
+mk_mm (oct"201", false, true);
+mk_mm (oct"203", true, false);
+mk_mm (oct"205", false, false);
+mk_mm (oct"207", true, true);
+
+def mk_uu(expr code, tall, deep) =
+beginchar(code,10u#,
+  if tall: asc_height# else: x_height# fi,
+  if deep: desc_depth# else: 0 fi);
+italcorr if tall: asc_height# else: x_height# fi
+  *slant-serif_fit#+.5stem#-2u#;
+adjust_fit(serif_fit#+stem_shift#,serif_fit#-stem_shift#);
+numeric light_vair; light_vair=vair if hefty: -vround 2vair_corr fi;
+if light_vair<fine.breadth: light_vair:=fine.breadth; fi
+pickup tiny.nib; pos1(stem,0); pos2(stem,0);
+pos3(stem,0); pos4(stem',0);
+lft x1l=hround(2.5u-.5stem); x1=x2; x3=w-x1; x3r=x4r;
+if serifs: top y1=x_height+min(oo,serif_drop);
+ bot y4=if deep: -d else: -min(oo,serif_drop) fi;
+else: top y1=x_height; bot y4=-d; fi
+pos0(stem,0); pos0'(stem',0); x0=x3; x0'=x4; y0=y0';
+penpos2'(stem-fine,-180); z2'=z2; y2=.5bar_height;
+top y3=h if not tall: if serifs: +min(oo,serif_drop) fi fi;
+penpos5(max(eps,light_vair-fine),-90); penpos6(thin_join-fine,0);
+y6=y0=2/3bar_height;
+filldraw stroke z1e--z2e;  % left stem
+filldraw stroke z3e..z0e--z0'e..z4e;  % right stem
+pickup fine.nib; bot y5r=-oo; x5l=.5w-.25u; lft x6l=tiny.lft x0l;
+(x,y5r)=whatever[z5l,z6l]; x5r:=max(x,.5[x5,x2'r]);
+filldraw stroke {{interim superness:=hein_super;
+  pulled_arc.e(2',5)}} & z5e{right}...{up}z6e;  % arc
+if serifs: sloped_serif.l(1,2,a,1/3,jut,serif_drop); % upper left serif
+ sloped_serif.l(3,0,b,1/3,jut,serif_drop); % upper right serif
+ if deep: dish_serif(4,0',c,1/3,jut,d,1/3,jut);
+  else: sloped_serif.r(4,0',c,1/3,jut,min(oo,serif_drop)); fi fi % lower right serif
+penlabels(1,2,3,4,5); labels(6); endchar;
+enddef;
+
+mk_uu (oct"220", false, true);
+mk_uu (oct"222", true, false);
+mk_uu (oct"224", false, false);
+mk_uu (oct"226", true, true);
+
+def mk_ww(expr code, tall, deep) =
+beginchar(code,15u#,
+  if tall: asc_height# else: x_height# fi,
+  if deep: desc_depth# else: 0 fi);
+italcorr if tall: asc_height# else: x_height# fi
+  *slant-serif_fit#+.5stem#-2u#;
+adjust_fit(serif_fit#+stem_shift#,serif_fit#-stem_shift#);
+numeric light_vair; light_vair=vair if hefty: -vround 2vair_corr fi;
+if light_vair<fine.breadth: light_vair:=fine.breadth; fi
+pickup tiny.nib; pos1(stem,0); pos2(stem,0);
+pos3(stem,0); pos4(stem,0); pos7(stem,0); pos8(stem',0);
+lft x1l=hround(2.5u-.5stem); x1=x2; x7=w-x1; x7r=x8r;
+x3=.5[x1,x7]; x4=.5[x2,x8];
+if serifs: top y1=top y3=x_height+min(oo,serif_drop);
+ bot y8=if deep: -d else: -min(oo,serif_drop) fi;
+else: top y1=top y3=x_height; bot y8=-d; fi
+pos0(stem,0); pos0'(stem',0); x0=x7; x0'=x8; y0=y0';
+penpos2'(stem-fine,-180); z2'=z2;
+penpos4'(stem-fine,-180); z4'=z4; y2=y4=.5bar_height;
+top y7=h if not tall: if serifs: +min(oo,serif_drop) fi fi;
+penpos5(max(eps,light_vair-fine),-90); penpos6(thin_join-fine,0);
+penpos9(max(eps,light_vair-fine),-90); penpos10(thin_join-fine,0);
+y6=y10=y0=2/3bar_height;
+filldraw stroke z1e--z2e;  % left stem
+filldraw stroke z3e--z4e;  % middle stem
+filldraw stroke z7e..z0e--z0'e..z8e;  % right stem
+pickup fine.nib; bot y5=bot y9r=-oo;
+x5l=.5[x1,x3]-.25u; lft x6l=tiny.lft x3l;
+x9l=.5[x3,x7]-.25u; lft x10l=tiny.lft x0l;
+numeric xx;
+(xx,y5r)=whatever[z5l,z6l]; x5r:=max(xx,.5[x5,x2'r]);
+(x,y9r)=whatever[z9l,z10l]; x9r:=max(x,.5[x9,x4'r]);
+filldraw stroke {{interim superness:=hein_super;
+  pulled_arc.e(2',5)}} & z5e{right}...{up}z6e;  % left arc
+filldraw stroke {{interim superness:=hein_super;
+  pulled_arc.e(4',9)}} & z9e{right}...{up}z10e;  % right arc
+if serifs: sloped_serif.l(1,2,a,1/3,jut,serif_drop); % upper left serif
+ sloped_serif.l(3,4,e,1/3,jut,serif_drop); % upper middle serif
+ sloped_serif.l(7,0,b,1/3,jut,serif_drop); % upper right serif
+ if deep: dish_serif(8,0',c,1/3,jut,d,1/3,jut);
+  else: sloped_serif.r(8,0',c,1/3,jut,min(oo,serif_drop)); fi fi % lower right serif
+penlabels(1,2,3,4,5,7,8,9); labels(6,10); endchar;
+enddef;
+
+mk_ww (oct"221", false, true);
+mk_ww (oct"223", true, false);
+mk_ww (oct"225", false, false);
+mk_ww (oct"227", true, true);
+

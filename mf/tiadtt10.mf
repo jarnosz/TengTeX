@@ -1,0 +1,10 @@
+% Computer Modern Tengwar Typewriter 10pt
+if unknown cmbase: input cmbase fi
+
+design_size := 10;
+font_identifier:="tIADtt"; font_size design_size*pt#;
+
+input c-cmtt;   % compute size parameters for CMTT family
+
+generate tiad      % switch to the driver file
+

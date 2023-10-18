@@ -1,0 +1,10 @@
+% Computer Modern Tengwar Sans Serif Boldface 10pt
+if unknown cmbase: input cmbase fi
+
+design_size := 10;
+font_identifier:="tIADSSBX"; font_size design_size*pt#;
+
+input c-cmssbx;   % compute size parameters for CMSSBX family
+
+generate tiad      % switch to the driver file
+
